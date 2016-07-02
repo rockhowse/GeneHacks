@@ -1,5 +1,5 @@
 """
-A set of functiosn useful for processing mult-fasta formatted data
+A set of functions useful for processing mult-fasta formatted data
 """
 
 class FastaRecord():
@@ -31,7 +31,7 @@ def get_num_records(fasta_file_name):
     """
     counts number of records denoted by lines starting with ">" character
     :param fasta_file_name:
-    :return: num_records, num_errors
+    :return num_records, num_errors:
     """
     num_records = 0
     num_errors = 0
@@ -53,7 +53,7 @@ def get_record_headers(fasta_file_name):
     """
     returns a list containing all the headers for each fasta record
     :param fasta_file_name:
-    :return: header_records
+    :return header_records:
     """
     header_records = []
 
@@ -70,7 +70,7 @@ def get_record_id(fasta_line):
     """
     retuns the identifier for this fasta record
     :param fasta_line:
-    :return:
+    :return unique_id:
     """
 
     unique_id = None
@@ -87,11 +87,11 @@ def get_record_id(fasta_line):
 def get_sequences(fasta_file_name):
     """
     Gets a dictionary of FastaRecord objects, each containing the following:
-      1. key is the id
+      1. id (key)
       2. header
       3. sequence
     :param fasta_file_name:
-    :return:
+    :return sequences:
     """
 
     sequences = {}
@@ -115,7 +115,7 @@ def get_sequences(fasta_file_name):
                 else:
                     sequences[fasta_id] = [cur_fasta_record]
 
-            # otherwise, we assume we are handling the correct fast_id and append the seq data until the next fasta_id
+            # otherwise, we assume we are handling the correct FastaRecord() and append the seq data until the next FastaRecord()
             else:
                 # append on this sequence line
                 cur_fasta_record.sequence += line.strip()
