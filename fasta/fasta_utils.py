@@ -2,6 +2,31 @@
 A set of functiosn useful for processing mult-fasta formatted data
 """
 
+class FastaRecord():
+    """
+    Simple python class for holding fasta records
+    """
+
+    def __init__(self, id, header, sequence=""):
+        self.id = id
+        self.header = header
+        self.sequence = sequence
+
+def is_header_line(fasta_line):
+    """
+    Returns True if line is fasta header line, False otherwise
+    :param fasta_line:
+    :return: is_fasta_header
+    """
+
+    is_fasta_header = False
+
+    if fasta_line.startswith(">") and fasta_line[1] != " ":
+        is_fasta_header = True
+
+    return is_fasta_header
+
+
 def get_num_records(fasta_file_name):
     """
     counts number of records denoted by lines starting with ">" character
@@ -14,7 +39,7 @@ def get_num_records(fasta_file_name):
     with open(fasta_file_name, "r") as in_file:
 
         for line in in_file:
-            if line.startswith(">"):
+            if is_header_line(line):
                 # fasta headers shouldn't have a space after the ">" character
                 if line[1] == " ":
                     num_errors += 1
@@ -35,15 +60,33 @@ def get_record_headers(fasta_file_name):
     with open(fasta_file_name, "r") as in_file:
         for line in in_file:
             # make sure it doesn't have a space after >
-            if line.startswith(">") and line[1] != " ":
+            if is_header_line(line):
                 header_records.append(line.strip())
 
     return header_records
 
 
+def get_record_id(fasta_line):
+    """
+    retuns the identifier for this fasta record
+    :param fasta_line:
+    :return:
+    """
+
+    unique_id = None
+
+    if is_header_line(fasta_line):
+        split_line = fasta_line.split("|")
+
+        # trim the > character
+        unique_id = split_line[0][1] + "~" + split_line[1] + "~" + split_line[2] + "~" + split_line[3]
+
+    return unique_id
+
+
 def get_sequences(fasta_file_name):
     """
-    Gets a dictionary with the following data:
+    Gets a dictionary of FastaRecord objects, each containing the following:
       1. key is the id
       2. header
       3. sequence
@@ -52,5 +95,29 @@ def get_sequences(fasta_file_name):
     """
 
     sequences = {}
+
+    with open(fasta_file_name, "r") as in_file:
+        # as we create the records, we need to append them to the data structure
+        cur_fasta_record = None
+
+        for line in in_file:
+
+            # if we have a fasta header, create the key for the dict
+            # and use it and the header to init the FastaRecord()
+            if is_header_line(line):
+                fasta_id = get_record_id(line)
+                fasta_header = line.strip()
+
+                cur_fasta_record = FastaRecord(fasta_id, fasta_header)
+
+                if fasta_id in sequences:
+                    sequences[fasta_id].append(cur_fasta_record)
+                else:
+                    sequences[fasta_id] = [cur_fasta_record]
+
+            # otherwise, we assume we are handling the correct fast_id and append the seq data until the next fasta_id
+            else:
+                # append on this sequence line
+                cur_fasta_record.sequence += line.strip()
 
     return sequences
