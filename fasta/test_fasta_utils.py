@@ -36,6 +36,16 @@ class TestFastaUtils(unittest.TestCase):
 
         self.assertGreaterEqual(len(header_records), 0)
 
+    def test_fasta_get_sequences(self):
+        """
+        Tests the fasta file to get the dictionary containing the unpacked id, header, sequence data
+        :return:
+        """
+
+        sequences = fau.get_sequences(full_file_name)
+
+        self.assertGreaterEqual(len(sequences), 0)
+
 """
     Test all fasta util functions
 """

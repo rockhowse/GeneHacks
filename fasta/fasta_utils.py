@@ -39,3 +39,18 @@ def get_record_headers(fasta_file_name):
                 header_records.append(line.strip())
 
     return header_records
+
+
+def get_sequences(fasta_file_name):
+    """
+    Gets a dictionary with the following data:
+      1. key is the id
+      2. header
+      3. sequence
+    :param fasta_file_name:
+    :return:
+    """
+
+    sequences = {}
+
+    return sequences
