@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5883adae-27d8-49c7-b556-aeb5cd8d7d88" name="Default" comment="" />
+    <list default="true" id="5883adae-27d8-49c7-b556-aeb5cd8d7d88" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/fasta/fasta_utils.py" />
+    </list>
     <ignored path="GeneHacks.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -35,17 +37,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="fasta_utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fasta/fasta_utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="648">
-              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="herp.dna.example.fasta" pinned="false" current-in-tab="true">
+      <file leaf-file-name="herp.dna.example.fasta" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/fasta/data/herp.dna.example.fasta">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
@@ -63,6 +55,16 @@
               <folding>
                 <element signature="e#57#72#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fasta_utils.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/fasta/fasta_utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1080">
+              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -167,24 +169,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="fasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GeneHacks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GeneHacks" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="fasta" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -508,6 +492,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/fasta/data/herp.dna.example.fasta">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/fasta/test_fasta_utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="837">
@@ -520,16 +512,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/fasta/fasta_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/fasta/data/herp.dna.example.fasta">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="1080">
+          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
           <folding />
         </state>
       </provider>
