@@ -8,7 +8,7 @@ data_dir = "./data/"
 test_file_name = "herp.dna.example.fasta"
 full_file_name = data_dir + test_file_name
 
-debug = False
+debug = True
 
 class TestFastaUtils(unittest.TestCase):
 
@@ -81,6 +81,29 @@ class TestFastaUtils(unittest.TestCase):
         sequences = fau.get_sequences(full_file_name)
 
         self.assertGreaterEqual(len(sequences), 0)
+
+    def test_fasta_get_sequence_lengths(self):
+        """
+        Tests the lengths of the sequences in a fasta file
+        :return:
+        """
+
+        sequence_lengths = fau.get_sequence_lengths(full_file_name)
+
+        self.assertGreaterEqual(len(sequence_lengths), 0)
+
+        for length_val in sequence_lengths:
+
+            if debug:
+                print "length: " + str(length_val)
+
+            self.assertGreaterEqual(length_val, 0)
+
+        if debug:
+            print "min: " + str(min(sequence_lengths))
+            print "max: " + str(max(sequence_lengths))
+
+
 
 """
     Test all fasta util functions

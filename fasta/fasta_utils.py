@@ -115,9 +115,28 @@ def get_sequences(fasta_file_name):
                 else:
                     sequences[fasta_id] = [cur_fasta_record]
 
-            # otherwise, we assume we are handling the correct FastaRecord() and append the seq data until the next FastaRecord()
+            # otherwise, we assume we are handling the correct FastaRecord()
+            # and append the seq data until the next FastaRecord()
             else:
                 # append on this sequence line
                 cur_fasta_record.sequence += line.strip()
 
     return sequences
+
+
+def get_sequence_lengths(fasta_file_name):
+    """
+    Returns a list of the lengths of the sequences in a fasta file
+    :param fasta_file_name:
+    :return:
+    """
+
+    sequence_lengths = []
+
+    sequences = get_sequences(fasta_file_name)
+
+    for fasta_id in sequences:
+        for fasta_record in sequences[fasta_id]:
+            sequence_lengths.append(len(fasta_record.sequence))
+
+    return sequence_lengths
