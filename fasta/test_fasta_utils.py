@@ -118,34 +118,34 @@ class TestFastaUtils(unittest.TestCase):
         self.assertGreaterEqual(len(codon_list), 0)
 
 
-    def test_fasta_get_codons_from_seq_all_frames(self):
+    def test_fasta_get_codon_info_from_seq_all_frames(self):
         """
         Tests the splitting of a single stranded DNA seq into codons, test frames 1, 2, 3
         :return:
         """
 
-        codon_list_f1, codon_list_f2,codon_list_f3  = fau.get_codons_from_sequence_three_framed("AGGTGACACCGCAAGCCTTATATTAGC")
+        codon_info_f1, codon_info_f2, codon_info_f3  = fau.get_codons_from_sequence_three_framed("AGGTGACACCGCAAGCCTTATATTAGC")
 
         if debug:
             print "condons in frame1:"
-            for codon in codon_list_f1:
+            for codon in codon_info_f1.codons:
                 print "\t" + codon
 
-        self.assertGreaterEqual(len(codon_list_f1), 0)
+        self.assertGreaterEqual(len(codon_info_f1.codons), 0)
 
         if debug:
             print "condons in frame2:"
-            for codon in codon_list_f2:
+            for codon in codon_info_f2.codons:
                 print "\t" + codon
 
-        self.assertGreaterEqual(len(codon_list_f2), 0)
+        self.assertGreaterEqual(len(codon_info_f2.codons), 0)
 
         if debug:
             print "condons in frame3:"
-            for codon in codon_list_f3:
+            for codon in codon_info_f3.codons:
                 print "\t" + codon
 
-        self.assertGreaterEqual(len(codon_list_f3), 0)
+        self.assertGreaterEqual(len(codon_info_f3.codons), 0)
 
 """
     Test all fasta util functions
