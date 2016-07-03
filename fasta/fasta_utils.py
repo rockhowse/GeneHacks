@@ -99,7 +99,7 @@ def get_record_id(fasta_line):
     return unique_id
 
 
-def get_sequences(fasta_file_name):
+def get_sequences(fasta_file_name, sequence_id=None):
     """
     Gets a dictionary of FastaRecord objects, each containing the following:
       1. id (key)
@@ -126,7 +126,17 @@ def get_sequences(fasta_file_name):
                     cur_fasta_record.frame_2_codon_info, \
                     cur_fasta_record.frame_3_codon_info = get_codons_from_sequence_three_framed(cur_fasta_record.sequence)
 
+                    # if we have a passed in sequence_id only process this one record then GTFO
+                    if sequence_id and sequence_id == fasta_id:
+                        break
+
                 fasta_id = get_record_id(line)
+
+                # skip all sequences but this one if it's passed in
+                if sequence_id:
+                    if fasta_id != sequence_id:
+                        continue
+
                 fasta_header = line.strip()
 
                 cur_fasta_record = FastaRecord(fasta_id, fasta_header)
@@ -139,8 +149,16 @@ def get_sequences(fasta_file_name):
             # otherwise, we assume we are handling the correct FastaRecord()
             # and append the seq data until the next FastaRecord()
             else:
-                # append on this sequence line
-                cur_fasta_record.sequence += line.strip()
+
+                if cur_fasta_record:
+                    # append on this sequence line
+                    cur_fasta_record.sequence += line.strip()
+
+    # have to do codons for LAST record in the file
+    if cur_fasta_record:
+        cur_fasta_record.frame_1_codon_info, \
+        cur_fasta_record.frame_2_codon_info, \
+        cur_fasta_record.frame_3_codon_info = get_codons_from_sequence_three_framed(cur_fasta_record.sequence)
 
     return sequences
 
@@ -196,11 +214,57 @@ def get_open_reading_frames_from_codons(codons, frame_num=1):
 
     str_pos = 0
     open_reading_frames = []
-    start_codon = None
+    cur_orf = None
     # not needed ?
     # stop_codon = None
     open_reading_frame = None
 
+    start_codon_list = []
+
+    str_pos = 0
+
+    # get a list of the indexes of ALL start codons
+    for start_index in range(len(codons)):
+        codon = codons[start_index]
+
+        str_pos += len(codon)
+
+        #codon has to be len 3
+        if len(codon) != 3:
+            continue
+
+        if codon == CodonInfo.start_codon:
+            # increment strpos + 1 to account for DNA positioning (1 based)
+            open_reading_frames.append([start_index, start_index, str_pos+1, 3, codon])
+
+    # now go through each potential starting codon and read until we hit an end codon
+    for cur_orf in open_reading_frames:
+
+        # start directly after this start_codon
+        build_index = cur_orf[0]+1
+        found_end_codon = False
+
+        while build_index < len(codons):
+            codon = codons[build_index]
+
+            # codon has to be len 3, if not, break from this funciton
+            if len(codon) != 3:
+                break
+
+            cur_orf[4] += codon
+
+            # if this codon is in the list of stop codons, clear out start codon
+            if codon in CodonInfo.stop_codons:
+                found_end_codon = True
+                cur_orf[3] = len(cur_orf[4])
+                cur_orf[1] = build_index
+                break
+
+            build_index += 1
+
+    derp = 27
+
+    ''' old code, didn't handle start codons INSIDE other start_codons
     for codon in codons:
         #codon has to be len 3
         if len(codon) != 3:
@@ -218,10 +282,11 @@ def get_open_reading_frames_from_codons(codons, frame_num=1):
             if codon in CodonInfo.stop_codons:
                 # not needed?
                 # stop_codon = codon
-                open_reading_frames.append([frame_num, str_pos, open_reading_frame])
+                open_reading_frames.append([len(open_reading_frame), str_pos, open_reading_frame])
                 start_codon = None
 
         str_pos += len(codon)
+    '''
 
     return open_reading_frames
 

@@ -90,3 +90,6 @@ ENV/
 
 #pycharm ignore
 .idea/
+
+# specific fasta data sets
+dna2.fasta
