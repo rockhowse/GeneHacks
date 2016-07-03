@@ -153,7 +153,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        overlapping_repeats = fau.get_overlapping_repeats("ACACA", 3)
+        overlapping_repeats = fau.get_overlapping_repeats("ACAACAACAACA", 3)
 
         self.assertGreater(len(overlapping_repeats), 0)
 
