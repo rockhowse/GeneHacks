@@ -70,7 +70,7 @@ class TestFastaUtils(unittest.TestCase):
         unique_id = fau.get_record_id(header_records[0])
 
         # checks agains the first id in the first record in the supplied data file
-        self.assertEqual(unique_id, "g~142022655~gb~EQ086233.1")
+        self.assertEqual(unique_id, "gi|142022655|gb|EQ086233.1|43")
 
     def test_fasta_get_sequences(self):
         """
