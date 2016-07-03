@@ -147,6 +147,16 @@ class TestFastaUtils(unittest.TestCase):
 
         self.assertGreaterEqual(len(codon_info_f3.codons), 0)
 
+    def test_fasta_get_overlapping_repeats(self):
+        """
+        Tests the obtaining of overlapping repeats from a single sided DNA seq given a desired seq_length
+        :return:
+        """
+
+        overlapping_repeats = fau.get_overlapping_repeats("ACACA", 3)
+
+        self.assertGreater(len(overlapping_repeats), 0)
+
 """
     Test all fasta util functions
 """

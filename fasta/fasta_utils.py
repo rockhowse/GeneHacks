@@ -252,3 +252,42 @@ def get_codons_from_sequence_three_framed(dna_sequence):
     codon_info_f3 = CodonInfo(codons=codon_list_f3, open_reading_frames=codon_orf_f3)
 
     return codon_info_f1, codon_info_f2, codon_info_f3
+
+def get_overlapping_repeats(dna_sequence, repeat_length):
+    """
+    Returns a dict containing the repeat_length letter seq as the key with a list containing the start position of each occurrence
+    :param dna_sequence:
+    :param repeat_length:
+    :return overlapping_repeats:
+    """
+
+    overlapping_repeats = {}
+
+    # loop through the seq one letter at a time taking the repeat_length chunk
+    for start_index in range(len(dna_sequence)):
+        potential_repeat = dna_sequence[start_index:start_index+repeat_length]
+
+        # now loop through the seq AGAIN using this same chunk for comparison
+        second_index = start_index+1
+
+        for second_index in range(len(dna_sequence)):
+            #have to skip the start_index or we get an extra match
+            if second_index <= start_index:
+                continue
+
+            #speed this up a bit, only compare first character
+            if dna_sequence[second_index] != potential_repeat[0]:
+                continue
+            # compare the whole string
+            else:
+                potential_repeat2 = dna_sequence[second_index:second_index+repeat_length]
+
+                if potential_repeat == potential_repeat2:
+
+                    # have to add 1 to give DNA character position, not python position
+                    if potential_repeat in overlapping_repeats:
+                        overlapping_repeats[potential_repeat].append(second_index+1)
+                    else:
+                        overlapping_repeats[potential_repeat] = [start_index+1, second_index+1]
+
+    return overlapping_repeats
