@@ -212,15 +212,7 @@ def get_open_reading_frames_from_codons(codons, frame_num=1):
     :return:
     """
 
-    str_pos = 0
     open_reading_frames = []
-    cur_orf = None
-    # not needed ?
-    # stop_codon = None
-    open_reading_frame = None
-
-    start_codon_list = []
-
     str_pos = 0
 
     # get a list of the indexes of ALL start codons
@@ -262,31 +254,13 @@ def get_open_reading_frames_from_codons(codons, frame_num=1):
 
             build_index += 1
 
+        # if we get to here without finding a stop codon... invalid ORF
+        if not found_end_codon:
+            cur_orf[3] = 0
+            cur_orf[4] = None
+
     derp = 27
 
-    ''' old code, didn't handle start codons INSIDE other start_codons
-    for codon in codons:
-        #codon has to be len 3
-        if len(codon) != 3:
-            continue
-
-        if codon == CodonInfo.start_codon:
-            start_codon = codon
-
-            open_reading_frame = start_codon
-
-        elif start_codon:
-            open_reading_frame += codon
-
-            # if this codon is in the list of stop codons, clear out start codon
-            if codon in CodonInfo.stop_codons:
-                # not needed?
-                # stop_codon = codon
-                open_reading_frames.append([len(open_reading_frame), str_pos, open_reading_frame])
-                start_codon = None
-
-        str_pos += len(codon)
-    '''
 
     return open_reading_frames
 
