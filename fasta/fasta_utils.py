@@ -128,7 +128,7 @@ def get_sequence_lengths(fasta_file_name):
     """
     Returns a list of the lengths of the sequences in a fasta file
     :param fasta_file_name:
-    :return:
+    :return sequence_lengths:
     """
 
     sequence_lengths = []
@@ -140,3 +140,44 @@ def get_sequence_lengths(fasta_file_name):
             sequence_lengths.append(len(fasta_record.sequence))
 
     return sequence_lengths
+
+
+def get_codons_from_sequence(dna_sequence, reading_frame=1):
+    """
+    Returns a list of all 3 character functions
+    :param dna_sequence:
+    :return codon_list:
+    """
+
+    codon_list = []
+
+    # have to handle special case of frame 2, 3
+    if reading_frame > 1:
+        codon_list.append(dna_sequence[0:reading_frame-1])
+
+    # subract 1 because reading frames are 1, 2, 3
+    cur_index = reading_frame-1
+
+    while cur_index < len(dna_sequence):
+        codon_list.append(dna_sequence[cur_index:cur_index+3])
+
+        cur_index += 3
+
+    return codon_list
+
+def get_codons_from_sequence_three_framed(dna_sequence):
+    """
+    Returns frames 1, 2 and 3 given a single sequence
+    :param dna_sequence:
+    :return codon_list_f1, codon_list_f2, condon_list_f3:
+    """
+
+    codon_list_f1 = []
+    codon_list_f2 = []
+    codon_list_f3 = []
+
+    codon_list_f1 = get_codons_from_sequence(dna_sequence, 1)
+    codon_list_f2 = get_codons_from_sequence(dna_sequence, 2)
+    codon_list_f3 = get_codons_from_sequence(dna_sequence, 3)
+
+    return codon_list_f1, codon_list_f2, codon_list_f3
