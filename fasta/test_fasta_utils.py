@@ -8,7 +8,7 @@ data_dir = "./data/"
 test_file_name = "herp.dna.example.fasta"
 full_file_name = data_dir + test_file_name
 
-debug = True
+debug = False
 
 class TestFastaUtils(unittest.TestCase):
 

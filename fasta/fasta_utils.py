@@ -7,10 +7,13 @@ class FastaRecord():
     Simple python class for holding fasta records
     """
 
-    def __init__(self, id, header, sequence=""):
+    def __init__(self, id, header, sequence="", frame_1_codons=None, frame_2_codons=None, frame_3_codons=None):
         self.id = id
         self.header = header
         self.sequence = sequence
+        self.frame_1_codons = frame_1_codons
+        self.frame_2_codons = frame_2_codons
+        self.frame_3_codons = frame_3_codons
 
 def is_header_line(fasta_line):
     """
@@ -84,7 +87,7 @@ def get_record_id(fasta_line):
     return unique_id
 
 
-def get_sequences(fasta_file_name):
+def get_sequences(fasta_file_name, include_codons=False):
     """
     Gets a dictionary of FastaRecord objects, each containing the following:
       1. id (key)
@@ -105,6 +108,12 @@ def get_sequences(fasta_file_name):
             # if we have a fasta header, create the key for the dict
             # and use it and the header to init the FastaRecord()
             if is_header_line(line):
+
+                if cur_fasta_record and include_codons:
+                    cur_fasta_record.frame_1_codons, \
+                    cur_fasta_record.frame_2_codons, \
+                    cur_fasta_record.frame_3_codons = get_codons_from_sequence_three_framed(cur_fasta_record.sequence)
+
                 fasta_id = get_record_id(line)
                 fasta_header = line.strip()
 
