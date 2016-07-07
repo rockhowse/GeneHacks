@@ -7,10 +7,12 @@ Package containing utility data structures and functions for handling generic dn
 It supports the following data structures:
 
 * dna_standard_alphabet ~ standard DNA text characters: "ACGT"
+* complement ~ dictionary of the complement of a DNA character, used for reverse compliment
 
 It supports the following functions:
 
 * generate_random_seq(num_in_seq) ~ function to get back a random seq made from the dna_standard_alphabet
+* reverse_complement(dna_seq) ~ given a DNA sequence, return the reverse complement of that sequence
 
 # fasta
 Package containing utility data structures and functions for handling fasta formatted data
