@@ -1,6 +1,17 @@
 # GeneHacks
 Set of tools used for processing Geneomic and Bioinformatic data
 
+# dna
+Package containing utility data structures and functions for handling generic dna data
+
+It supports the following data structures:
+
+* dna_standard_alphabet ~ standard DNA text characters: "ACGT"
+
+It supports the following functions:
+
+* generate_random_seq(num_in_seq) ~ function to get back a random seq made from the dna_standard_alphabet
+
 # fasta
 Package containing utility data structures and functions for handling fasta formatted data
 
