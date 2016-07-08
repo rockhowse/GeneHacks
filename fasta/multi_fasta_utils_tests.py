@@ -1,8 +1,8 @@
 """
-Testing script for calling fasta_utils functiosn
+Testing script for calling multi fasta_utils functions
 """
 import unittest
-import fasta_utils as fau
+import multi_fasta_utils as mfau
 
 data_dir = "./data/"
 test_file_name = "herp.dna.example.fasta"
@@ -10,7 +10,7 @@ full_file_name = data_dir + test_file_name
 
 debug = False
 
-class TestFastaUtils(unittest.TestCase):
+class TestMultiFastaUtils(unittest.TestCase):
 
     def test_is_fasta_header(self):
         """
@@ -22,7 +22,7 @@ class TestFastaUtils(unittest.TestCase):
 
         with open(full_file_name, "r") as in_file:
             for line in in_file:
-                is_fasta_header = fau.is_header_line(line)
+                is_fasta_header = mfau.is_header_line(line)
 
                 # only testing the first line
                 break
@@ -35,7 +35,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        num_records,num_errors = fau.get_num_records(full_file_name)
+        num_records,num_errors = mfau.get_num_records(full_file_name)
 
         if debug:
             print(full_file_name + " has: " + str(num_records) + " records.")
@@ -49,7 +49,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        header_records = fau.get_record_headers(full_file_name)
+        header_records = mfau.get_record_headers(full_file_name)
 
         if debug:
             for header_record in header_records:
@@ -63,11 +63,11 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        header_records = fau.get_record_headers(full_file_name)
+        header_records = mfau.get_record_headers(full_file_name)
 
         self.assertGreaterEqual(len(header_records), 0)
 
-        unique_id = fau.get_record_id(header_records[0])
+        unique_id = mfau.get_record_id(header_records[0])
 
         # checks agains the first id in the first record in the supplied data file
         self.assertEqual(unique_id, "gi|142022655|gb|EQ086233.1|43")
@@ -78,7 +78,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        sequences = fau.get_sequences(full_file_name)
+        sequences = mfau.get_sequences(full_file_name)
 
         self.assertGreaterEqual(len(sequences), 0)
 
@@ -88,7 +88,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        sequence_lengths = fau.get_sequence_lengths(full_file_name)
+        sequence_lengths = mfau.get_sequence_lengths(full_file_name)
 
         self.assertGreaterEqual(len(sequence_lengths), 0)
 
@@ -109,7 +109,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        codon_list = fau.get_codons_from_sequence("AGGTGACACCGCAAGCCTTATATTAGC")
+        codon_list = mfau.get_codons_from_sequence("AGGTGACACCGCAAGCCTTATATTAGC")
 
         if debug:
             for codon in codon_list:
@@ -124,7 +124,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        codon_info_f1, codon_info_f2, codon_info_f3  = fau.get_codons_from_sequence_three_framed("AGGTGACACCGCAAGCCTTATATTAGC")
+        codon_info_f1, codon_info_f2, codon_info_f3  = mfau.get_codons_from_sequence_three_framed("AGGTGACACCGCAAGCCTTATATTAGC")
 
         if debug:
             print "condons in frame1:"
@@ -153,7 +153,7 @@ class TestFastaUtils(unittest.TestCase):
         :return:
         """
 
-        overlapping_repeats = fau.get_overlapping_repeats("ACAACAACAACA", 3)
+        overlapping_repeats = mfau.get_overlapping_repeats("ACAACAACAACA", 3)
 
         self.assertGreater(len(overlapping_repeats), 0)
 
