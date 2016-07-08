@@ -2,8 +2,14 @@
 Simple tests for use with the dna_utils.py
 """
 
+# http://stackoverflow.com/questions/1054271/how-to-import-a-python-class-that-is-in-a-directory-above
+import sys
+# Adds higher directory to python modules path.
+sys.path.append("../fasta/")
+
 import unittest
 import dna_utils as du
+import fasta.fasta_utils as fau
 
 debug = False
 
@@ -28,6 +34,26 @@ class TestDNAUtils(unittest.TestCase):
         reverse_complement = du.reverse_complement(seq)
 
         self.assertEquals(reverse_complement, 'CGCCCGGGTTCAGGTAACGGTGACCCT')
+
+    def test_get_frequency_counts(self):
+        """
+        Simple test that gets the frequency of each base in a DNA sequence
+        """
+
+        dir_name = "../fasta/data/"
+        file_name = "lambda_virus.fa"
+        full_file_name = dir_name + file_name
+
+        genome = fau.read_genome(full_file_name)
+
+        counts = du.get_frequency_counts(genome)
+
+        self.assertEqual(counts['A'], 12334)
+        self.assertEqual(counts['C'], 11362)
+        self.assertEqual(counts['G'], 12820)
+        self.assertEqual(counts['T'], 11986)
+
+        derp = 27
 
 """
     Test all dna util functions
