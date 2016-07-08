@@ -17,6 +17,16 @@ It supports the following functions:
 # fasta
 Package containing utility data structures and functions for handling fasta formatted data
 
+## fasta_utils
+Useful functions for fast files with a single geneome
+
+It supports the following functions:
+
+read_genome(file_name) ~ reads an entire genome in a fasta file given the fasta file name
+
+## fasta_utils_multi
+Useful functions for handling fast files with multiple reads in them
+
 It supports the following data structures:
 
 * CodonInfo() containing the following:
@@ -36,3 +46,11 @@ It supports the following functions:
 * get a count of the number of valid and potentially erroneous records
 * get a list containing just the record headers
 * get a dictionary containing a list of FastaRecord() objects pulled from the file keyed on the id in the FastaRecord()
+
+# fastq
+Package containing utility data structures and functiosn for handling fastq formatted data
+
+IT supports the following functions:
+
+q_to_phred_33(Q) ~ Turn Q into Phred+33 ASCII-encoded quality
+phread_33_to_q(qual) ~ Turn Phred+33 ASCII-encoded quality into Q
