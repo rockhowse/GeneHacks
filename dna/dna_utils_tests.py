@@ -53,8 +53,6 @@ class TestDNAUtils(unittest.TestCase):
         self.assertEqual(counts['G'], 12820)
         self.assertEqual(counts['T'], 11986)
 
-        derp = 27
-
 """
     Test all dna util functions
 """
