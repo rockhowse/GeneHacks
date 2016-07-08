@@ -2,7 +2,11 @@
 Set of tools used for processing Geneomic and Bioinformatic data
 
 # dna
-Package containing utility data structures and functions for handling generic dna data
+Package containing utility data structures and functions for handling generic DNA data
+
+
+## dna_utils
+Useful data structures and functions for handling DNA data
 
 It supports the following data structures:
 
@@ -50,7 +54,10 @@ It supports the following functions:
 # fastq
 Package containing utility data structures and functiosn for handling fastq formatted data
 
-IT supports the following functions:
+## fastq_utils
+Useful data structures and functions for handling fastq data
 
-q_to_phred_33(Q) ~ Turn Q into Phred+33 ASCII-encoded quality
-phread_33_to_q(qual) ~ Turn Phred+33 ASCII-encoded quality into Q
+It supports the following functions:
+
+* q_to_phred_33(Q) ~ Turn Q into Phred+33 ASCII-encoded quality
+* phread_33_to_q(qual) ~ Turn Phred+33 ASCII-encoded quality into Q
