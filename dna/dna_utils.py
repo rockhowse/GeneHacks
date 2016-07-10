@@ -2,6 +2,7 @@
 File that contains utility data structures and functions for handling DNA data
 """
 import random
+import collections
 
 # standard DNA characters
 dna_standard_alphabet = "ACGT"
@@ -46,18 +47,25 @@ def reverse_complement(dna_seq):
     return rc
 
 
-def get_frequency_counts(genome):
+def get_frequency_counts(sequence):
     """
     returns a dict containing the frequency of each base for a given sequence
 
-    :param genome:
+    :param sequence:
     :return:
     """
+
+    ''' doesn't handle reads with 'N' in fastq files
     base_counts = {'A': 0, 'C': 0, 'G': 0, 'T': 0}
 
     for base in genome:
         base_counts[base] += 1
+    '''
 
-    return base_counts
+    count = collections.Counter()
+
+    count.update(sequence)
+
+    return count
 
 

@@ -66,3 +66,33 @@ def create_hist(qualities):
             hist[q] += 1
 
     return hist
+
+
+def find_gc_by_pos(sequences, read_length=100):
+    """
+    Given a list of reads from a fastq file, get the GC composiiton at a specific position
+    :param sequences:
+    :param read_length:
+    :return:
+    """
+
+    gc = [0] * read_length
+    totals = [0] * read_length
+
+    for read in sequences:
+        for i in range(len(read)):
+
+            # increment GC of read
+            if read[i] in ['C', 'G']:
+                gc[i] += 1
+
+            # increment totals
+            totals[i] += 1
+
+    # calculate the GC ratio for reads
+    for i in range(len(gc)):
+        # div/0 error
+        if totals[i] > 0:
+             gc[i] /= float(totals[i])
+
+    return gc

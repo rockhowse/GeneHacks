@@ -4,6 +4,9 @@ tests for fastq_utils
 
 import unittest
 import fastq_utils as fqu
+import dna.dna_utils as dnau
+
+import matplotlib.pyplot as plt
 
 data_dir = "./data/"
 test_file_name = "SRR835775_1.first1000.fastq"
@@ -55,13 +58,50 @@ class TestFastqUtils(unittest.TestCase):
 
         hist = fqu.create_hist(qualities)
 
-        ''' hist of read qualities
-        import matplotlib.pyplot as plt
+        self.assertEqual(len(hist), 50)
+
+        #hist of read qualities
         plt.bar(range(len(hist)), hist)
         plt.show()
-        '''
 
-        self.assertEqual(len(hist), 50)
+    def test_find_gc_by_pos(self):
+        """
+        Tests the GC by position function
+        :return:
+        """
+
+        sequences, qualities = fqu.read_fastq(full_file_name)
+
+        gc_by_pos = fqu.find_gc_by_pos(sequences)
+
+        self.assertEqual(len(gc_by_pos), 100)
+
+        # line plot of GC ratio for these reads
+        plt.plot(range(len(gc_by_pos)), gc_by_pos)
+        plt.show()
+
+    def test_fastq_base_dist(self):
+        """
+        Quick test to get the base distribution of our sequences
+        :return:
+        """
+
+        sequences, qualities = fqu.read_fastq(full_file_name)
+
+        sequence = "".join(sequences)
+
+        base_dist = dnau.get_frequency_counts(sequence)
+
+        self.assertEqual(base_dist['A'], 21132)
+        self.assertEqual(base_dist['C'], 28272)
+        self.assertEqual(base_dist['G'], 28742)
+        self.assertEqual(base_dist['T'], 21836)
+        # 'N' means not confident
+        self.assertEqual(base_dist['N'], 18)
+
+        derp = 27
+
+
 
 """
     Test all fastq util functions
