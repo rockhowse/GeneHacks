@@ -1,6 +1,10 @@
 """
 Most basic read/alignment algorithms
 """
+import sys
+sys.path.append("../dna/")
+
+import dna.dna_utils as dnau
 
 def naive_exact(read, sequence):
     """
@@ -34,3 +38,32 @@ def naive_exact(read, sequence):
             occurrences.append(i)
 
     return occurrences, matches, mismatches
+
+
+def naive_exact_with_rc(read, sequence):
+    """
+    Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence) in both 5' and 3' strands
+    :param read:
+    :param sequence:
+    :return occurrences:
+    :return matches:
+    :return mismatches:
+    """
+
+    occurrences = []
+    matches_total = 0
+    mismatches_total = 0
+
+    occurrences, matches, mismatches = naive_exact(read, sequence)
+
+    matches_total += matches
+    mismatches_total +=  mismatches
+
+    occurrences_reverse_compliment, matches, mismatches = naive_exact(dnau.reverse_complement(read), sequence)
+
+    matches_total += matches
+    mismatches_total +=  mismatches
+    occurrences.extend(occurrences_reverse_compliment)
+
+    # convert occurences to set then back to list to remove any duplicates
+    return list(set(occurrences)), matches, mismatches

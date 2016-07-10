@@ -45,6 +45,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(matches, 6)
         self.assertEqual(mismatches, 3)
 
+        ''' take a long time, un-comment out for full testing
         # ----- Test artificial random reads ----- #
 
         genome = fau.read_genome(full_file_name)
@@ -144,6 +145,45 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(num_read, 1000)
 
         print ('%d / %d reads matched the genome', num_matched, num_read)
+        '''
+
+    def test_naive_exact_with_rc(self):
+        """
+        Tests the naive exact match with reverse compliement awareness
+        :return:
+        """
+
+        p = 'CCC'
+        ten_as = 'AAAAAAAAAA'
+        t = ten_as + 'CCC' + ten_as + 'GGG' + ten_as
+        occurrences, _, _  = rau.naive_exact_with_rc(p, t)
+        print(occurrences)
+
+        self.assertEqual(occurrences[0], 10)
+        self.assertEqual(occurrences[1], 23)
+
+        p = 'CGCG'
+        t = ten_as + 'CGCG' + ten_as + 'CGCG' + ten_as
+        occurrences, _, _ = rau.naive_exact_with_rc(p, t)
+        print(occurrences)
+
+        self.assertEqual(occurrences[0], 24)
+        self.assertEqual(occurrences[1], 10)
+
+        # ----- Real world alignment ----- #
+        data_dir = "../fasta/data/"
+        test_file_name = "phix.fa"
+        full_file_name = data_dir + test_file_name
+
+        phix_genome = fau.read_genome(full_file_name)
+
+        occurrences, _, _ = rau.naive_exact_with_rc('ATTA', phix_genome)
+
+        print('offset of leftmost occurrence: %d' % min(occurrences))
+        print('# occurrences: %d' % len(occurrences))
+
+        self.assertEqual(min(occurrences), 62)
+        self.assertEqual(len(occurrences), 60)
 
 """
     Test all read/alignment functions
