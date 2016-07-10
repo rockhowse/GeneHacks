@@ -1,5 +1,5 @@
 # GeneHacks
-Set of tools used for processing Geneomic and Bioinformatic data
+Set of tools used for processing Geneomic and Bioinformatic data implemented in Python 2
 
 # dna
 Package containing utility data structures and functions for handling generic DNA data
@@ -67,8 +67,11 @@ It supports the following functions:
 * matplotlib ~ used for graphing
 
 # read_alignment
-Package containing utility data structures and functions for aligning reads to sequences
+Package containing utility data structures and functions and tests for aligning reads to sequences
+
+## read_alignment_utils
+Utility data structures and functions for aligning reads to sequences
 
 It supports the following functions:
 
-* naive_exact(pattern, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads
+* naive_exact(read, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads
