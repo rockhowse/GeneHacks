@@ -69,3 +69,18 @@ def get_frequency_counts(sequence):
     return count
 
 
+def get_random_reads(genome, num_reads, read_len):
+    """
+    Gets a list of randomly generated "reads" from a given genome
+    :param genome:
+    :param num_reads:
+    :param read_len:
+    :return reads:
+    """
+
+    reads = []
+    for _ in range(num_reads):
+        start = random.randint(0, len(genome)-read_len) - 1
+        reads.append(genome[start:start+read_len])
+
+    return reads

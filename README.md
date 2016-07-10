@@ -16,6 +16,7 @@ It supports the following functions:
 
 * generate_random_seq(num_in_seq) ~ function to get back a random seq made from the dna_standard_alphabet
 * reverse_complement(dna_seq) ~ given a DNA sequence, return the reverse complement of that sequence
+* get_random_reads(genome, num_reads, read_len) ~ returns a list containing num_reads of random "reads" from the genome of read_len
 
 # fasta
 Package containing utility data structures and functions for handling fasta formatted data

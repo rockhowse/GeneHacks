@@ -8,11 +8,14 @@ import sys
 sys.path.append("../fasta/")
 
 import unittest
-import dna_utils as du
+import dna_utils as dnau
 import fasta.fasta_utils as fau
 
-debug = False
+dir_name = "../fasta/data/"
+file_name = "lambda_virus.fa"
+full_file_name = dir_name + file_name
 
+debug = False
 
 class TestDNAUtils(unittest.TestCase):
 
@@ -20,7 +23,7 @@ class TestDNAUtils(unittest.TestCase):
         """
         Simple test to our random seq generator function
         """
-        seq = du.generate_random_seq(10)
+        seq = dnau.generate_random_seq(10)
 
         self.assertEquals(seq.__len__(), 10)
 
@@ -31,7 +34,7 @@ class TestDNAUtils(unittest.TestCase):
         """
         seq = 'AGGGTCACCGTTACCTGAACCCGGGCG'
 
-        reverse_complement = du.reverse_complement(seq)
+        reverse_complement = dnau.reverse_complement(seq)
 
         self.assertEquals(reverse_complement, 'CGCCCGGGTTCAGGTAACGGTGACCCT')
 
@@ -39,19 +42,30 @@ class TestDNAUtils(unittest.TestCase):
         """
         Simple test that gets the frequency of each base in a DNA sequence
         """
-
-        dir_name = "../fasta/data/"
-        file_name = "lambda_virus.fa"
-        full_file_name = dir_name + file_name
-
+        
         genome = fau.read_genome(full_file_name)
 
-        counts = du.get_frequency_counts(genome)
+        counts = dnau.get_frequency_counts(genome)
 
         self.assertEqual(counts['A'], 12334)
         self.assertEqual(counts['C'], 11362)
         self.assertEqual(counts['G'], 12820)
         self.assertEqual(counts['T'], 11986)
+
+    def test_get_random_reads(self):
+        """
+        Simple test that gets random reads from a given genome
+        """
+
+        genome = fau.read_genome(full_file_name)
+
+        random_reads = dnau.get_random_reads(genome, 5, 100)
+
+        self.assertEqual(len(random_reads), 5)
+
+        for read in random_reads:
+            self.assertEqual(len(read), 100)
+
 
 """
     Test all dna util functions
