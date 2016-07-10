@@ -99,10 +99,6 @@ class TestFastqUtils(unittest.TestCase):
         # 'N' means not confident
         self.assertEqual(base_dist['N'], 18)
 
-        derp = 27
-
-
-
 """
     Test all fastq util functions
 """
