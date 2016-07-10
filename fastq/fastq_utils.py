@@ -50,3 +50,19 @@ def read_fastq(file_name):
 
     return sequences, qualities
 
+
+def create_hist(qualities):
+    """
+    Creates a histagram with frequency of quality scores
+    :param qualities:
+    :return:
+    """
+
+    hist = [0] * 50
+
+    for qual in qualities:
+        for phred in qual:
+            q = phread_33_to_q(phred)
+            hist[q] += 1
+
+    return hist

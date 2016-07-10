@@ -45,6 +45,24 @@ class TestFastqUtils(unittest.TestCase):
         self.assertGreater(len(sequences), 0)
         self.assertGreater(len(qualities), 0)
 
+    def test_create_hist(self):
+        """
+        Tests the building of a histigram of quality scores from fastq file
+        :return:
+        """
+
+        sequences, qualities = fqu.read_fastq(full_file_name)
+
+        hist = fqu.create_hist(qualities)
+
+        ''' hist of read qualities
+        import matplotlib.pyplot as plt
+        plt.bar(range(len(hist)), hist)
+        plt.show()
+        '''
+
+        self.assertEqual(len(hist), 50)
+
 """
     Test all fastq util functions
 """
