@@ -94,3 +94,4 @@ ENV/
 # specific fasta data sets
 dna2.fasta
 fasta/fasta_questions.py
+read_alignment/read_alignment_questions.py

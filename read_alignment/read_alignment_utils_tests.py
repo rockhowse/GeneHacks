@@ -185,6 +185,36 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(min(occurrences), 62)
         self.assertEqual(len(occurrences), 60)
 
+    def test_naive_mm_allowed(self):
+
+        p = 'CTGT'
+        ten_as = 'AAAAAAAAAA'
+        t = ten_as + 'CTGT' + ten_as + 'CTTT' + ten_as + 'CGGG' + ten_as
+
+        occurrences, _, _ = rau.naive_mm_allowed(p, t, 2)
+        print(occurrences)
+
+        self.assertEqual(len(occurrences), 3)
+        self.assertEqual(occurrences[0], 10)
+        self.assertEqual(occurrences[1], 24)
+        self.assertEqual(occurrences[2], 38)
+
+        # ----- Real world alignment ----- #
+        data_dir = "../fasta/data/"
+        test_file_name = "phix.fa"
+        full_file_name = data_dir + test_file_name
+
+        phix_genome = fau.read_genome(full_file_name)
+
+        occurrences, _, _ = rau.naive_mm_allowed('GATTACA', phix_genome, 2)
+
+        print('offset of leftmost occurrence: %d' % min(occurrences))
+        print('# occurrences: %d' % len(occurrences))
+
+        self.assertEqual(min(occurrences), 10)
+        self.assertEqual(len(occurrences), 79)
+
+
 """
     Test all read/alignment functions
 """

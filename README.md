@@ -76,3 +76,5 @@ Utility data structures and functions for aligning reads to sequences
 It supports the following functions:
 
 * naive_exact(read, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads
+* naive_exact_with_rc(read_sequence) ~ returns a list of offeset where the read occures on either the forward OR reverse strand
+* naive_mm_allowed(read, sequence, num_mm_allowed=2) ~     Matches exact read in DNA sequence, returning a list of the occurrences (offests from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2

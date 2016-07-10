@@ -6,6 +6,47 @@ sys.path.append("../dna/")
 
 import dna.dna_utils as dnau
 
+
+def naive_mm_allowed(read, sequence, num_mm_allowed=2):
+    """
+    Matches exact read in DNA sequence, returning a list of the occurrences (offests from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2
+    :param read:
+    :param sequence:
+    :param num_mm_allowed:
+    :return occurrences:
+    :return matches:
+    :return mismatches:
+    """
+
+    occurrences = []
+    matches = 0
+    mismatches = 0
+
+    # loop over alignments, make sure to end before length of read
+    for i in range(len(sequence) - len(read) + 1):
+        match = True
+
+        allowed_mm = 0
+        for j in range(len(read)):
+            # if the characters don'sequence match, break out immediately
+            if sequence[i+j] != read[j]:
+                mismatches += 1
+
+                allowed_mm += 1
+
+                # allow num_mm_allowed before breaking
+                if allowed_mm > num_mm_allowed:
+                    match = False
+                    break
+            else:
+                matches += 1
+
+        if match:
+            # all chars matched, add to list
+            occurrences.append(i)
+
+    return occurrences, matches, mismatches
+
 def naive_exact(read, sequence):
     """
     Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence)
