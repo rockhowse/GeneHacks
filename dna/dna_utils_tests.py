@@ -42,7 +42,7 @@ class TestDNAUtils(unittest.TestCase):
         """
         Simple test that gets the frequency of each base in a DNA sequence
         """
-        
+
         genome = fau.read_genome(full_file_name)
 
         counts = dnau.get_frequency_counts(genome)
