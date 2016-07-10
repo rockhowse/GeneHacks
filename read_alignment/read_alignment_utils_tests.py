@@ -112,7 +112,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(num_read, 1000)
 
         print ('%d / %d reads matched the genome', num_matched, num_read)
-        
+
         # ----- Test real-world random reads on both sides of the DNA ----- #
 
         data_dir2 = "../fastq/data/"
