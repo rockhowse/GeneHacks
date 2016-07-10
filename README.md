@@ -51,7 +51,7 @@ It supports the following functions:
 * get a dictionary containing a list of FastaRecord() objects pulled from the file keyed on the id in the FastaRecord()
 
 # fastq
-Package containing utility data structures and functiosn for handling fastq formatted data
+Package containing utility data structures and functions for handling fastq formatted data
 
 ## fastq_utils
 Useful data structures and functions for handling fastq data
@@ -62,6 +62,13 @@ It supports the following functions:
 * phread_33_to_q(qual) ~ Turn Phred+33 ASCII-encoded quality into Q
 * read_fastq(file_name) ~ given a fastq file, return a list of reads and their corresponding qualities
 
-# Package Dependencies
+## Package Dependencies
 
 * matplotlib ~ used for graphing
+
+# read_alignment
+Package containing utility data structures and functions for aligning reads to sequences
+
+It supports the following functions:
+
+* naive_exact(pattern, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads

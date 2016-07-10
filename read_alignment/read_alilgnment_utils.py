@@ -2,11 +2,11 @@
 Most basic read/alignment algorithms
 """
 
-def naive_exact(p, t):
+def naive_exact(pattern, sequence):
     """
-    Matches exact pattern p in text t, returning a list of the occurences (offests from start of t)
-    :param p:
-    :param t:
+    Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence)
+    :param pattern:
+    :param sequence:
     :return occurrences:
     :return matches:
     :return mismatches:
@@ -17,12 +17,12 @@ def naive_exact(p, t):
     mismatches = 0
 
     # loop over alignments, make sure to end before length of pattern
-    for i in range(len(t) - len(p) + 1):
+    for i in range(len(sequence) - len(pattern) + 1):
         match = True
 
-        for j in range(len(p)):
-            # if the characters don't match, break out immediately
-            if t[i+j] != p[j]:
+        for j in range(len(pattern)):
+            # if the characters don'sequence match, break out immediately
+            if sequence[i+j] != pattern[j]:
                 mismatches += 1
                 match = False
                 break
