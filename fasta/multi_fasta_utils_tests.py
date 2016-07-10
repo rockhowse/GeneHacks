@@ -5,7 +5,7 @@ import unittest
 import multi_fasta_utils as mfau
 
 data_dir = "./data/"
-test_file_name = "herp.dna.example.fasta"
+test_file_name = "]dna.example.fasta"
 full_file_name = data_dir + test_file_name
 
 debug = False
