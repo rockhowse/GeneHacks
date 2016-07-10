@@ -8,6 +8,7 @@ sys.path.append("../dna/")
 import read_alilgnment_utils as rau
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
+import fastq.fastq_utils as fqu
 
 data_dir = "../fasta/data/"
 test_file_name = "phix.fa"
@@ -44,6 +45,8 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(matches, 6)
         self.assertEqual(mismatches, 3)
 
+        # ----- Test artificial random reads ----- #
+
         genome = fau.read_genome(full_file_name)
 
         random_reads = dnau.get_random_reads(genome, 100, 100)
@@ -63,6 +66,30 @@ class TestReadAlignmentUtils(unittest.TestCase):
             num_matched += 1
 
         self.assertEqual(num_matched, 100)
+
+        # ----- Test real-world random reads ----- #
+
+        data_dir2 = "../fastq/data/"
+        test_file_name2 = "ERR266411_1.first1000.fastq"
+        full_file_name2 = data_dir2 + test_file_name2
+
+        phix_reads, _ = fqu.read_fastq(full_file_name2)
+
+        num_matched = 0
+        num_read = 0
+        for read in phix_reads:
+            occurrences, _, _ = rau.naive_exact(read, genome)
+            num_read += 1
+
+            if len(occurrences) > 0:
+                num_matched += 1
+
+        # only 7 reads matched exactly out of 1000 in the single side
+        self.assertEqual(num_matched, 7)
+        self.assertEqual(num_read, 1000)
+
+        print ('%d / %d reads matched the genome', num_matched, num_read)
+
 
 """
     Test all read/alignment functions
