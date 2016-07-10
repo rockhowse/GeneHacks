@@ -11,7 +11,8 @@ dna_standard_alphabet = "ACGT"
 complement = {'A': 'T',
               'C': 'G',
               'G': 'C',
-              'T': 'A'}
+              'T': 'A',
+              'N': 'N'}
 
 
 def generate_random_seq(num_in_seq):

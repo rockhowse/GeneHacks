@@ -90,6 +90,60 @@ class TestReadAlignmentUtils(unittest.TestCase):
 
         print ('%d / %d reads matched the genome', num_matched, num_read)
 
+        # ----- Test real-world random reads first 30 bases only ----- #
+
+        data_dir2 = "../fastq/data/"
+        test_file_name2 = "ERR266411_1.first1000.fastq"
+        full_file_name2 = data_dir2 + test_file_name2
+
+        phix_reads, _ = fqu.read_fastq(full_file_name2)
+
+        num_matched = 0
+        num_read = 0
+        for read in phix_reads:
+            occurrences, _, _ = rau.naive_exact(read[:30], genome)
+            num_read += 1
+
+            if len(occurrences) > 0:
+                num_matched += 1
+
+        # only 439 reads matched exactly out of 1000 in the single side
+        self.assertEqual(num_matched, 459)
+        self.assertEqual(num_read, 1000)
+
+        print ('%d / %d reads matched the genome', num_matched, num_read)
+        
+        # ----- Test real-world random reads on both sides of the DNA ----- #
+
+        data_dir2 = "../fastq/data/"
+        test_file_name2 = "ERR266411_1.first1000.fastq"
+        full_file_name2 = data_dir2 + test_file_name2
+
+        phix_reads, _ = fqu.read_fastq(full_file_name2)
+
+        num_matched = 0
+        num_read = 0
+        for read in phix_reads:
+            r = read[:30]
+            occurrences, _, _ = rau.naive_exact(r, genome)
+
+            occurrences_reverse_compliment, _, _ = rau.naive_exact(dnau.reverse_complement(r), genome)
+
+            if len(occurrences_reverse_compliment) < 0:
+                derp = 27
+
+            occurrences.extend(occurrences_reverse_compliment)
+
+            num_read += 1
+
+            if len(occurrences) > 0:
+                num_matched += 1
+
+        # only 439 reads matched exactly out of 1000 in the single side
+        self.assertEqual(num_matched, 932)
+        self.assertEqual(num_read, 1000)
+
+        print ('%d / %d reads matched the genome', num_matched, num_read)
 
 """
     Test all read/alignment functions
