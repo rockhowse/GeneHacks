@@ -6,6 +6,8 @@ sys.path.append("../fasta/")
 sys.path.append("../dna/")
 
 import read_alilgnment_utils as rau
+import boyer_moore as bm
+
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
 import fastq.fastq_utils as fqu
@@ -186,6 +188,10 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(len(occurrences), 60)
 
     def test_naive_mm_allowed(self):
+        """
+        Tests the naive exact match with 2 mismatches allowed
+        :return:
+        """
 
         p = 'CTGT'
         ten_as = 'AAAAAAAAAA'
@@ -214,6 +220,27 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(min(occurrences), 10)
         self.assertEqual(len(occurrences), 79)
 
+    def test_boyer_moore(self):
+        """
+        tests the list of occurrences found when using boyer_moore matching
+        :return:
+        """
+
+        t = 'GCTACGATCTAGAATCTA'
+        p = 'TCTA'
+
+        # pre-process pattern
+        p_bm = bm.BoyerMoore(p)
+        occurrences, matches, mismatches = rau.boyer_moore(p, p_bm, t)
+
+        self.assertEquals(matches, 2)
+        self.assertEquals(mismatches, 5)
+        self.assertEquals(occurrences[0], 7)
+        self.assertEquals(occurrences[1], 14)
+
+        # check to make sure all occurrences in our returned list match up with the offset
+        for occurrence in occurrences:
+            self.assertEquals(t[occurrence:occurrence+4], p)
 
 """
     Test all read/alignment functions

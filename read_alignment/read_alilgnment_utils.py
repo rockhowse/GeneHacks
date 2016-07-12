@@ -7,6 +7,49 @@ sys.path.append("../dna/")
 import dna.dna_utils as dnau
 
 
+def boyer_moore(p, p_bm, t):
+    i = 0
+    occurrences = []
+    matches = 0
+    mismatches = 0
+
+    while i < len(t) - len(p) + 1:
+        # ammount we move after compare
+        shift = 1
+        mismatched = False
+
+        # start at the end
+        for j in range(len(p)-1, -1, -1):
+            # mismatch!
+            if not p[j] == t[i+j]:
+
+                # calculate the bad character rule skip
+                skip_bc = p_bm.bad_character_rule(j, t[i+j])
+
+                # calculate the good suffix rule skip
+                skip_gs = p_bm.good_suffix_rule(j)
+
+                # skip the largest of skip, BC and GS skips
+                shift = max(shift, skip_bc, skip_gs)
+                mismatched = True
+                mismatches += 1
+
+                break
+        if not mismatched:
+            occurrences.append(i)
+
+            # skip the amount in the match skip of bm
+            skip_gs = p_bm.match_skip()
+
+            # skip the max of our shift of gs skip
+            shift = max(shift, skip_gs)
+
+            matches += 1
+        i += shift
+
+    return occurrences, matches, mismatches
+
+
 def naive_mm_allowed(read, sequence, num_mm_allowed=2):
     """
     Matches exact read in DNA sequence, returning a list of the occurrences (offests from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2
@@ -106,5 +149,5 @@ def naive_exact_with_rc(read, sequence):
     mismatches_total +=  mismatches
     occurrences.extend(occurrences_reverse_compliment)
 
-    # convert occurences to set then back to list to remove any duplicates
+    # convert occurrences to set then back to list to remove any duplicates
     return list(set(occurrences)), matches, mismatches
