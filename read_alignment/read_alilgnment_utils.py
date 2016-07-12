@@ -134,19 +134,18 @@ def naive_exact_with_rc(read, sequence):
     :return mismatches:
     """
 
-    occurrences = []
     matches_total = 0
     mismatches_total = 0
 
     occurrences, matches, mismatches = naive_exact(read, sequence)
 
     matches_total += matches
-    mismatches_total +=  mismatches
+    mismatches_total += mismatches
 
     occurrences_reverse_compliment, matches, mismatches = naive_exact(dnau.reverse_complement(read), sequence)
 
     matches_total += matches
-    mismatches_total +=  mismatches
+    mismatches_total += mismatches
     occurrences.extend(occurrences_reverse_compliment)
 
     # convert occurrences to set then back to list to remove any duplicates
