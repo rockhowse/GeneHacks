@@ -17,24 +17,24 @@ def query_k_mer_index(p, t, index):
     return offsets
 
 
-def boyer_moore(p, p_bm, t):
+def boyer_moore(read, p_bm, sequence):
     i = 0
     occurrences = []
     matches = 0
     mismatches = 0
 
-    while i < len(t) - len(p) + 1:
+    while i < len(sequence) - len(read) + 1:
         # amount we move after compare
         shift = 1
         mismatched = False
 
         # start at the end
-        for j in range(len(p)-1, -1, -1):
+        for j in range(len(read)-1, -1, -1):
             # mismatch!
-            if not p[j] == t[i+j]:
+            if not read[j] == sequence[i+j]:
 
                 # calculate the bad character rule skip
-                skip_bc = p_bm.bad_character_rule(j, t[i+j])
+                skip_bc = p_bm.bad_character_rule(j, sequence[i + j])
 
                 # calculate the good suffix rule skip
                 skip_gs = p_bm.good_suffix_rule(j)

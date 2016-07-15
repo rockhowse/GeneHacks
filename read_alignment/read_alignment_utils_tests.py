@@ -243,7 +243,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         for occurrence in occurrences:
             self.assertEquals(t[occurrence:occurrence+4], p)
 
-    def test_k_mer(self):
+    def test_k_mer_index(self):
         """
         tests k_mer index implementation
         :return:

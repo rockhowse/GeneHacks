@@ -79,8 +79,8 @@ It supports the following functions:
 * naive_exact_with_rc(read_sequence) ~ returns a list of offset where the read occurs on either the forward OR reverse strand
 * naive_mm_allowed(read, sequence, num_mm_allowed=2) ~  Matches exact read in DNA sequence, returning a list of the occurrences (offsets from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2
 * boyer_moore(read, p_bm, sequence) ~ uses the boyer moore algorithm to return matches, requires that you pre-process the read with the BoyerMoore() object which is passed in as the second parameter
-* k_mer_index(
+* query_k_mer_index(read, sequence, index) ~ searches a pre-indexed sequence stored in a KMerIndex object for the given read
 
 ## Package Dependencies
 
-* bisect ~ used for bisect left (binary search)
+* bisect ~ used for bisect left (binary search), used in the k-mer index implementation
