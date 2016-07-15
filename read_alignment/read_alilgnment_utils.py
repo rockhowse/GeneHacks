@@ -7,6 +7,16 @@ sys.path.append("../dna/")
 import dna.dna_utils as dnau
 
 
+def query_k_mer_index(p, t, index):
+    k = index.k
+    offsets = []
+    for i in index.query(p):
+        # verification
+        if p[k:] == t[i+k:i+len(p)]:
+            offsets.append(i)
+    return offsets
+
+
 def boyer_moore(p, p_bm, t):
     i = 0
     occurrences = []
@@ -14,7 +24,7 @@ def boyer_moore(p, p_bm, t):
     mismatches = 0
 
     while i < len(t) - len(p) + 1:
-        # ammount we move after compare
+        # amount we move after compare
         shift = 1
         mismatched = False
 

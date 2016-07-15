@@ -7,6 +7,7 @@ sys.path.append("../dna/")
 
 import read_alilgnment_utils as rau
 import boyer_moore as bm
+import k_mer as km
 
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
@@ -241,6 +242,23 @@ class TestReadAlignmentUtils(unittest.TestCase):
         # check to make sure all occurrences in our returned list match up with the offset
         for occurrence in occurrences:
             self.assertEquals(t[occurrence:occurrence+4], p)
+
+    def test_k_mer(self):
+        """
+        tests k_mer index implementation
+        :return:
+        """
+
+        t = 'GCTACGATCTAGAATCTA'
+        p = 'TCTA'
+
+        index = km.KMerIndex(t, 2)
+        occurrences = rau.query_k_mer_index(p, t, index)
+
+        self.assertEquals(len(occurrences), 2)
+        self.assertEquals(occurrences[0], 7)
+        self.assertEquals(occurrences[1], 14)
+
 
 """
     Test all read/alignment functions
