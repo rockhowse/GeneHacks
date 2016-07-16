@@ -5,14 +5,62 @@ import sys
 sys.path.append("../dna/")
 
 import dna.dna_utils as dnau
+import boyer_moore as bm
 
 
-def query_k_mer_index(p, t, index):
+def approximate_match(read, sequence, num_segments):
+    """
+    'pidgeon hole' matching (approximate matching) using boyer-moore for segments
+    :param read:
+    :param sequence:
+    :param num_segments:
+    :return:
+    """
+
+    segment_length = int(round(len(read)/(num_segments+1)))
+    all_matches = set()
+
+    # go through each segment
+    for i in range(num_segments+1):
+        start = i*segment_length
+        end = min((i+1)*segment_length, len(read))
+
+        read_bm = bm.BoyerMoore(read[start:end], alphabet='ACGT')
+        matches, _, _ = boyer_moore(read[start:end], read_bm, sequence)
+
+        for match in matches:
+            # filter match before start or the match + read len after sequence
+            if match < start or match-start+len(read) > len(sequence):
+                continue
+
+            mismatches = 0
+
+            # check left hand side matches
+            for j in range(0, start):
+                if not read[j] == sequence[match-start+j]:
+                    mismatches += 1
+                    if mismatches > num_segments:
+                        break
+
+            # check right hand side matches
+            for j in range(end, len(read)):
+                if not read[j] == sequence[match-start+j]:
+                    mismatches += 1
+                    if mismatches > num_segments:
+                        break
+
+            if mismatches <= num_segments:
+                all_matches.add(match - start)
+
+    return list(all_matches)
+
+
+def query_k_mer_index(read, sequence, index):
     k = index.k
     offsets = []
-    for i in index.query(p):
+    for i in index.query(read):
         # verification
-        if p[k:] == t[i+k:i+len(p)]:
+        if read[k:] == sequence[i+k:i+len(read)]:
             offsets.append(i)
     return offsets
 

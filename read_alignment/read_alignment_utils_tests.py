@@ -259,6 +259,20 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEquals(occurrences[0], 7)
         self.assertEquals(occurrences[1], 14)
 
+    def test_approximate_match(self):
+        """
+        tests our approximate matching function that uses num_segments+1 segments and pigeon hole matching
+        :return:
+        """
+
+        t = 'CACTTAATTTG'
+        p = 'AACTTG'
+
+        occurrences = rau.approximate_match(p, t, 2)
+
+        self.assertEquals(len(occurrences), 2)
+        self.assertEquals(occurrences[0], 0)
+        self.assertEquals(occurrences[1], 5)
 
 """
     Test all read/alignment functions
