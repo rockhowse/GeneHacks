@@ -261,7 +261,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
 
     def test_approximate_match(self):
         """
-        tests our approximate matching function that uses num_segments+1 segments and pigeon hole matching
+        tests our approximate matching function that uses num_segments+1 segments and pigeon-hole matching with boyer-moore
         :return:
         """
 
