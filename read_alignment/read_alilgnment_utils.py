@@ -8,20 +8,74 @@ import dna.dna_utils as dnau
 import boyer_moore as bm
 
 
-def approximate_match_boyer_moore(read, sequence, num_segments):
+def approximate_match_kmer_index(read, sequence, num_allowed_edits, kmer_index):
     """
-    'pigeon hole' matching (approximate matching) using boyer-moore for segments
+    'pigeon hole' matching (approximate matching) using kmer_index for segments
+
     :param read:
     :param sequence:
-    :param num_segments:
+    :param num_allowed_edits:
+    :param kmer_index:
     :return:
     """
 
-    segment_length = int(round(len(read)/(num_segments+1)))
+    segment_length = int(round(len(read) / (num_allowed_edits + 1)))
+    all_matches = set()
+
+    num_index_hits = 0
+
+    # go through each segment
+    for i in range(num_allowed_edits+1):
+        start = i*segment_length
+        end = min((i+1)*segment_length, len(read))
+
+        # query kmer_index using this segment
+        matches = query_kmer_index(read[start:end], sequence, kmer_index)
+
+        num_index_hits += len(matches)
+
+        for match in matches:
+            # filter match before start or the match + read len after sequence
+            if match < start or match-start+len(read) > len(sequence):
+                continue
+
+            mismatches = 0
+
+            # check left hand side matches
+            for j in range(0, start):
+                if not read[j] == sequence[match-start+j]:
+                    mismatches += 1
+                    if mismatches > num_allowed_edits:
+                        break
+
+            # check right hand side matches
+            for j in range(end, len(read)):
+                if not read[j] == sequence[match-start+j]:
+                    mismatches += 1
+                    if mismatches > num_allowed_edits:
+                        break
+
+            if mismatches <= num_allowed_edits:
+                all_matches.add(match - start)
+
+    return list(all_matches), num_index_hits
+
+
+def approximate_match_boyer_moore(read, sequence, num_allowed_edits):
+    """
+    'pigeon hole' matching (approximate matching) using boyer-moore for segments
+
+    :param read:
+    :param sequence:
+    :param num_allowed_edits:
+    :return:
+    """
+
+    segment_length = int(round(len(read) / (num_allowed_edits + 1)))
     all_matches = set()
 
     # go through each segment
-    for i in range(num_segments+1):
+    for i in range(num_allowed_edits+1):
         start = i*segment_length
         end = min((i+1)*segment_length, len(read))
 
@@ -39,35 +93,35 @@ def approximate_match_boyer_moore(read, sequence, num_segments):
             for j in range(0, start):
                 if not read[j] == sequence[match-start+j]:
                     mismatches += 1
-                    if mismatches > num_segments:
+                    if mismatches > num_allowed_edits:
                         break
 
             # check right hand side matches
             for j in range(end, len(read)):
                 if not read[j] == sequence[match-start+j]:
                     mismatches += 1
-                    if mismatches > num_segments:
+                    if mismatches > num_allowed_edits:
                         break
 
-            if mismatches <= num_segments:
+            if mismatches <= num_allowed_edits:
                 all_matches.add(match - start)
 
     return list(all_matches)
 
 
-def query_k_mer_index(read, sequence, index):
+def query_kmer_index(read, sequence, kmer_index):
     """
     queries a pre-k-mer indexed sequence with a desired read
 
     :param read:
     :param sequence:
-    :param index:
+    :param kmer_index:
     :return:
     """
 
-    k = index.k
+    k = kmer_index.k
     offsets = []
-    for i in index.query(read):
+    for i in kmer_index.query(read):
         # verification
         if read[k:] == sequence[i+k:i+len(read)]:
             offsets.append(i)
@@ -188,7 +242,9 @@ def boyer_moore(read, p_bm, sequence):
 
 def naive_mm_allowed(read, sequence, num_mm_allowed=2):
     """
-    Matches exact read in DNA sequence, returning a list of the occurrences (offests from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2
+    Matches exact read in DNA sequence, returning a list of the occurrences (offests from start of sequence),
+    allows up to num_mm_allowed mismatches, with a default of 2
+
     :param read:
     :param sequence:
     :param num_mm_allowed:
@@ -277,6 +333,7 @@ def naive_exact_with_counts(read, sequence):
 def naive_exact(read, sequence):
     """
     Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence)
+
     :param read:
     :param sequence:
     :return occurrences:
@@ -310,7 +367,9 @@ def naive_exact(read, sequence):
 
 def naive_exact_with_rc(read, sequence):
     """
-    Matches exact pattern p in text sequence, returning a list of the occurrences (offsets from start of sequence) in both 5' and 3' strands
+    Matches exact pattern p in text sequence, returning a list of the occurrences (offsets from start of sequence)
+    in both 5' and 3' strands
+
     :param read:
     :param sequence:
     :return occurrences:

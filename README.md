@@ -82,11 +82,11 @@ It supports the following functions:
 
 * boyer_moore(read, p_bm, sequence) ~ uses the boyer moore algorithm to return matches, requires that you pre-process the read with the BoyerMoore() object which is passed in as the second parameter
 * boyer_moore_with_counts(read, p_pm, sequence) ~ returns the same information as the standard boyer_moore() function, but with two additional counts: num_alignments, and num_characters_compared as a measure of work done
-
-* approximate_match(read, sequence, num_segments) ~ approximate matching function that uses num_segments+1 segments and pigeon-hole matching with boyer-moore for exact matching per segment
+* approximate_match_boyer_moore(read, sequence, num_allowed_edits) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with boyer-moore for exact matching per segment
 
 * query_k_mer_index(read, sequence, index) ~ searches a pre-indexed sequence stored in a KMerIndex object for the given read
+* approximate_match_kmer_index(read, sequence, num_allowed_edits, kmer_index) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with the kmer-index for exact matching per segment
 
 ## Package Dependencies
 
-* bisect ~ used for bisect left (binary search), used in the k-mer index implementation
+* bisect ~ used for bisect left (binary search), used in the k-mer and subsequence index implementations

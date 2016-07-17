@@ -253,7 +253,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         p = 'TCTA'
 
         index = kmi.KMerIndex(t, 2)
-        occurrences = rau.query_k_mer_index(p, t, index)
+        occurrences = rau.query_kmer_index(p, t, index)
 
         self.assertEquals(len(occurrences), 2)
         self.assertEquals(occurrences[0], 7)
