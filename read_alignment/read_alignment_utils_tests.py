@@ -7,7 +7,7 @@ sys.path.append("../dna/")
 
 import read_alilgnment_utils as rau
 import boyer_moore as bm
-import k_mer as km
+import kmer_index as kmi
 
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
@@ -252,7 +252,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         t = 'GCTACGATCTAGAATCTA'
         p = 'TCTA'
 
-        index = km.KMerIndex(t, 2)
+        index = kmi.KMerIndex(t, 2)
         occurrences = rau.query_k_mer_index(p, t, index)
 
         self.assertEquals(len(occurrences), 2)
@@ -268,7 +268,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         t = 'CACTTAATTTG'
         p = 'AACTTG'
 
-        occurrences = rau.approximate_match(p, t, 2)
+        occurrences = rau.approximate_match_boyer_moore(p, t, 2)
 
         self.assertEquals(len(occurrences), 2)
         self.assertEquals(occurrences[0], 0)

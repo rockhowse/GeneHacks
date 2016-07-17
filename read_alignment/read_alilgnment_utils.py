@@ -8,9 +8,9 @@ import dna.dna_utils as dnau
 import boyer_moore as bm
 
 
-def approximate_match(read, sequence, num_segments):
+def approximate_match_boyer_moore(read, sequence, num_segments):
     """
-    'pidgeon hole' matching (approximate matching) using boyer-moore for segments
+    'pigeon hole' matching (approximate matching) using boyer-moore for segments
     :param read:
     :param sequence:
     :param num_segments:
