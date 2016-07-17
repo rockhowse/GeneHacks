@@ -77,11 +77,15 @@ It supports the following functions:
 
 * naive_exact(read, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads
 * naive_exact_with_rc(read, sequence) ~ returns a list of offset where the read occurs on either the forward OR reverse strand
-* naive_exact_with_counts(read, sequence) ~ returns the same information as the standard naive_exact() function, but with two additionl counts: num_alignments, and num_characters as a measure of work done
+* naive_exact_with_counts(read, sequence) ~ returns the same information as the standard naive_exact() function, but with two additional counts: num_alignments, and num_characters_compared as a measure of work done
 * naive_mm_allowed(read, sequence, num_mm_allowed=2) ~  Matches exact read in DNA sequence, returning a list of the occurrences (offsets from start of sequence), allows up to num_mm_allowed mismatches, with a default of 2
+
 * boyer_moore(read, p_bm, sequence) ~ uses the boyer moore algorithm to return matches, requires that you pre-process the read with the BoyerMoore() object which is passed in as the second parameter
-* query_k_mer_index(read, sequence, index) ~ searches a pre-indexed sequence stored in a KMerIndex object for the given read
+* boyer_moore_with_counts(read, p_pm, sequence) ~ returns the same information as the standard boyer_moore() function, but with two additional counts: num_alignments, and num_characters_compared as a measure of work done
+
 * approximate_match(read, sequence, num_segments) ~ approximate matching function that uses num_segments+1 segments and pigeon-hole matching with boyer-moore for exact matching per segment
+
+* query_k_mer_index(read, sequence, index) ~ searches a pre-indexed sequence stored in a KMerIndex object for the given read
 
 ## Package Dependencies
 
