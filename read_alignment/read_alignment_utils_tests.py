@@ -274,6 +274,35 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEquals(occurrences[0], 0)
         self.assertEquals(occurrences[1], 5)
 
+    def test_naive_exact_with_counts(self):
+        """
+        Tests out modified naive exact match that now includes num_alignments and num_characters as a measure of "work"
+        :return:
+        """
+
+        # example 1
+        p = 'word'
+        t = 'there would have been a time for such a word'
+        occurrences, _, _, num_alignments, num_character_comparisons = rau.naive_exact_with_counts(p, t)
+        print(occurrences, num_alignments, num_character_comparisons)
+
+        self.assertEqual(len(occurrences), 1)
+        self.assertEqual(occurrences[0], 40)
+        self.assertEqual(num_alignments, 41)
+        self.assertEqual(num_character_comparisons, 46)
+
+        # example 2
+        p = 'needle'
+        t = 'needle need noodle needle'
+        occurrences, _, _, num_alignments, num_character_comparisons = rau.naive_exact_with_counts(p, t)
+        print(occurrences, num_alignments, num_character_comparisons)
+
+        self.assertEqual(len(occurrences), 2)
+        self.assertEqual(occurrences[0], 0)
+        self.assertEqual(occurrences[1], 19)
+        self.assertEqual(num_alignments, 20)
+        self.assertEqual(num_character_comparisons, 35)
+
 """
     Test all read/alignment functions
 """

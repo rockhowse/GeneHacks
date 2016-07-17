@@ -148,6 +148,56 @@ def naive_mm_allowed(read, sequence, num_mm_allowed=2):
 
     return occurrences, matches, mismatches
 
+
+def naive_exact_with_counts(read, sequence):
+    """
+    Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence)
+    additionally, these include counts for the following:
+
+    1. num_alignments
+    2. num_characters
+
+    :param read:
+    :param sequence:
+    :return occurrences:
+    :return matches:
+    :return mismatches:
+    """
+
+    occurrences = []
+    matches = 0
+    mismatches = 0
+
+    num_alignments = 0
+    num_characters = 0
+
+    # loop over alignments, make sure to end before length of read
+    for i in range(len(sequence) - len(read) + 1):
+        match = True
+
+        for j in range(len(read)):
+
+            num_characters += 1
+
+            # if the characters don'sequence match, break out immediately
+            if sequence[i+j] != read[j]:
+                mismatches += 1
+                match = False
+                break
+            else:
+                matches += 1
+
+
+
+        if match:
+            # all chars matched, add to list
+            occurrences.append(i)
+
+        num_alignments += 1
+
+    return occurrences, matches, mismatches, num_alignments, num_characters
+
+
 def naive_exact(read, sequence):
     """
     Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence)
@@ -184,7 +234,7 @@ def naive_exact(read, sequence):
 
 def naive_exact_with_rc(read, sequence):
     """
-    Matches exact pattern p in text sequence, returning a list of the occurrences (offests from start of sequence) in both 5' and 3' strands
+    Matches exact pattern p in text sequence, returning a list of the occurrences (offsets from start of sequence) in both 5' and 3' strands
     :param read:
     :param sequence:
     :return occurrences:
