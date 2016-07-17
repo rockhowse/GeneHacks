@@ -100,11 +100,10 @@ def boyer_moore_with_counts(read, p_bm, sequence):
 
         # start at the end
         for j in range(len(read)-1, -1, -1):
+            num_characters_compared += 1
+
             # mismatch!
             if not read[j] == sequence[i+j]:
-
-                num_characters_compared += 1
-
                 # calculate the bad character rule skip
                 skip_bc = p_bm.bad_character_rule(j, sequence[i + j])
 

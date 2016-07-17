@@ -309,7 +309,31 @@ class TestReadAlignmentUtils(unittest.TestCase):
         :return:
         """
 
+        # example 1
+        p = 'word'
+        t = 'there would have been a time for such a word'
+        lowercase_alphabet = 'abcdefghijklmnopqrstuvwxyz '
+        p_bm = bm.BoyerMoore(p, lowercase_alphabet)
+        occurrences, _, _, num_alignments, num_character_comparisons = rau.boyer_moore_with_counts(p, p_bm, t)
+        print(occurrences, num_alignments, num_character_comparisons)
 
+        self.assertEqual(len(occurrences), 1)
+        self.assertEqual(occurrences[0], 40)
+        self.assertEqual(num_alignments, 12)
+        self.assertEqual(num_character_comparisons, 15)
+
+        #example 2
+        p = 'needle'
+        t = 'needle need noodle needle'
+        p_bm = bm.BoyerMoore(p, lowercase_alphabet)
+        occurrences, _, _, num_alignments, num_character_comparisons = rau.boyer_moore_with_counts(p, p_bm, t)
+        print(occurrences, num_alignments, num_character_comparisons)
+
+        self.assertEqual(len(occurrences), 2)
+        self.assertEqual(occurrences[0], 0)
+        self.assertEqual(occurrences[1], 19)
+        self.assertEqual(num_alignments, 5)
+        self.assertEqual(num_character_comparisons, 18)
 
 """
     Test all read/alignment functions
