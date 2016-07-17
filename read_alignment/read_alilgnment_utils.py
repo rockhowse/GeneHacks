@@ -8,6 +8,27 @@ import dna.dna_utils as dnau
 import boyer_moore as bm
 
 
+def query_subsequence_index(read, sequence, subsequence_index):
+    """
+    queries a pre-subsequence indexed sequence with a desired read
+
+    :param read:
+    :param sequence:
+    :param subsequence_index:
+    :return:
+    """
+
+    k = subsequence_index.k
+    offsets = []
+
+    for i in subsequence_index.query(read):
+        # verification
+        if read[k:] == sequence[i + k:i + len(read)]:
+            offsets.append(i)
+
+    return offsets
+
+
 def approximate_match_kmer_index(read, sequence, num_allowed_edits, kmer_index):
     """
     'pigeon hole' matching (approximate matching) using kmer_index for segments

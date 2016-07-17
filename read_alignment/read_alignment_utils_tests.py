@@ -8,6 +8,7 @@ sys.path.append("../dna/")
 import read_alilgnment_utils as rau
 import boyer_moore as bm
 import kmer_index as kmi
+import subsequent_index as ssi
 
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
@@ -335,6 +336,21 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(num_alignments, 5)
         self.assertEqual(num_character_comparisons, 18)
 
+    def test_query_subsequence_index(self):
+
+        #example 1
+        t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
+        p = 'to-morrow and to-morrow '
+        subseq_index = ssi.SubseqIndex(t, 8, 3)
+        occurrences, num_index_hits = rau.query_subsequence_index(p, t, subseq_index)
+
+        print(occurrences)
+        self.assertEqual(len(occurrences), 2)
+        self.assertEqual(occurrences[0], 0)
+        self.assertEqual(occurrences[1], 14)
+
+        print(num_index_hits)
+        self.assertEqual(num_index_hits, 6)
 """
     Test all read/alignment functions
 """
