@@ -339,10 +339,23 @@ class TestReadAlignmentUtils(unittest.TestCase):
     def test_query_subsequence_index(self):
 
         #example 1
-        t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
         p = 'to-morrow and to-morrow '
+        t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
         subseq_index = ssi.SubseqIndex(t, 8, 3)
-        occurrences, num_index_hits = rau.query_subsequence_index(p, t, subseq_index)
+        occurrences = rau.query_subsequence_index(p, t, subseq_index)
+
+        print(occurrences)
+        self.assertEqual(len(occurrences), 2)
+        self.assertEqual(occurrences[0], 0)
+        self.assertEqual(occurrences[1], 14)
+
+    def test_approximate_match_subsequence_index(self):
+
+        #example 1
+        p = 'to-morrow and to-morrow '
+        t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
+        subsequence_index = ssi.SubseqIndex(t, 8, 3)
+        occurrences, num_index_hits = rau.approximate_match_subsequence_index(p, t, 2, subsequence_index)
 
         print(occurrences)
         self.assertEqual(len(occurrences), 2)
@@ -351,6 +364,26 @@ class TestReadAlignmentUtils(unittest.TestCase):
 
         print(num_index_hits)
         self.assertEqual(num_index_hits, 6)
+
+        #example 2
+        # downloaded test data from: http://www.gutenberg.org/cache/epub/1110/pg1110.txt
+        data_dir = "./data/"
+        file_name = 'pg1110.txt'
+        full_file_name = data_dir + file_name
+
+        t = open(full_file_name).read()
+        p = 'English measure backward'
+        subsequence_index = ssi.SubseqIndex(t, 8, 3)
+        occurrences, num_index_hits = rau.approximate_match_subsequence_index(p, t, 2, subsequence_index)
+
+        print(occurrences)
+        self.assertEqual(len(occurrences), 1)
+        # not sure if I am getting the correct download but close enough to 135249
+        self.assertEqual(occurrences[0], 132188)
+
+        print(num_index_hits)
+        self.assertEqual(num_index_hits, 3)
+
 """
     Test all read/alignment functions
 """

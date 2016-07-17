@@ -88,6 +88,7 @@ It supports the following functions:
 * approximate_match_kmer_index(read, sequence, num_allowed_edits, kmer_index) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with the kmer-index for exact matching per segment
 
 * query_subsequence_index(read, sequence, subsequence_index) ~ queries a pre-subsequence indexed sequence with a desired read
+* approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with the subsequence-index for exact matching per segment
 
 ## Package Dependencies
 
