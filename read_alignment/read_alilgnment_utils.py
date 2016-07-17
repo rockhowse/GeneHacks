@@ -56,6 +56,15 @@ def approximate_match(read, sequence, num_segments):
 
 
 def query_k_mer_index(read, sequence, index):
+    """
+    queries a pre-k-mer indexed sequence with a desired read
+
+    :param read:
+    :param sequence:
+    :param index:
+    :return:
+    """
+
     k = index.k
     offsets = []
     for i in index.query(read):
@@ -65,7 +74,77 @@ def query_k_mer_index(read, sequence, index):
     return offsets
 
 
+def boyer_moore_with_counts(read, p_bm, sequence):
+    """
+    Uses a pre BoyerMoore() indexed sequence to align a specific read, returns some measurement of work as denoted by
+    num_alignments and num_characters_compared
+
+    :param read:
+    :param p_bm:
+    :param sequence:
+    :return:
+    """
+
+    i = 0
+    occurrences = []
+    matches = 0
+    mismatches = 0
+
+    num_alignments = 0
+    num_characters_compared = 0
+
+    while i < len(sequence) - len(read) + 1:
+        # amount we move after compare
+        shift = 1
+        mismatched = False
+
+        # start at the end
+        for j in range(len(read)-1, -1, -1):
+            # mismatch!
+            if not read[j] == sequence[i+j]:
+
+                num_characters_compared += 1
+
+                # calculate the bad character rule skip
+                skip_bc = p_bm.bad_character_rule(j, sequence[i + j])
+
+                # calculate the good suffix rule skip
+                skip_gs = p_bm.good_suffix_rule(j)
+
+                # skip the largest of skip, BC and GS skips
+                shift = max(shift, skip_bc, skip_gs)
+                mismatched = True
+                mismatches += 1
+
+                break
+        if not mismatched:
+            occurrences.append(i)
+
+            # skip the amount in the match skip of bm
+            skip_gs = p_bm.match_skip()
+
+            # skip the max of our shift of gs skip
+            shift = max(shift, skip_gs)
+
+            matches += 1
+
+        i += shift
+
+        num_alignments += 1
+
+    return occurrences, matches, mismatches, num_alignments, num_characters_compared
+
+
 def boyer_moore(read, p_bm, sequence):
+    """
+    Uses a pre BoyerMoore() indexed sequence to align a specific read
+
+    :param read:
+    :param p_bm:
+    :param sequence:
+    :return:
+    """
+
     i = 0
     occurrences = []
     matches = 0
@@ -169,7 +248,7 @@ def naive_exact_with_counts(read, sequence):
     mismatches = 0
 
     num_alignments = 0
-    num_characters = 0
+    num_characters_compared = 0
 
     # loop over alignments, make sure to end before length of read
     for i in range(len(sequence) - len(read) + 1):
@@ -177,7 +256,7 @@ def naive_exact_with_counts(read, sequence):
 
         for j in range(len(read)):
 
-            num_characters += 1
+            num_characters_compared += 1
 
             # if the characters don'sequence match, break out immediately
             if sequence[i+j] != read[j]:
@@ -187,15 +266,13 @@ def naive_exact_with_counts(read, sequence):
             else:
                 matches += 1
 
-
-
         if match:
             # all chars matched, add to list
             occurrences.append(i)
 
         num_alignments += 1
 
-    return occurrences, matches, mismatches, num_alignments, num_characters
+    return occurrences, matches, mismatches, num_alignments, num_characters_compared
 
 
 def naive_exact(read, sequence):

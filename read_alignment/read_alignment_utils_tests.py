@@ -303,6 +303,14 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(num_alignments, 20)
         self.assertEqual(num_character_comparisons, 35)
 
+    def test_boyer_moore_with_counts(self):
+        """
+        Tests out modified boyer_moore that now includes num_alignments and num_characters_compared
+        :return:
+        """
+
+
+
 """
     Test all read/alignment functions
 """
