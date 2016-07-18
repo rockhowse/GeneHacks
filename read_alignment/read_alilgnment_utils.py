@@ -24,32 +24,28 @@ def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subse
 
     num_index_hits = 0
 
+    all_potential_matches = set()
+
     # go through each segment
     for i in range(num_allowed_edits+1):
-        start = i*segment_length
-        end = min((i+1)*segment_length, len(read))
+        start = i
+        # don't need end since we do subseq on read
 
         # query kmer_index using this segment
-        matches = query_subsequence_index(read, sequence, subsequence_index)
+        matches = query_subsequence_index(read[start:], sequence, subsequence_index)
 
         num_index_hits += len(matches)
 
         for match in matches:
+
             # filter match before start or the match + read len after sequence
             if match < start or match-start+len(read) > len(sequence):
                 continue
 
             mismatches = 0
 
-            # check left hand side matches
-            for j in range(0, start):
-                if not read[j] == sequence[match-start+j]:
-                    mismatches += 1
-                    if mismatches > num_allowed_edits:
-                        break
-
-            # check right hand side matches
-            for j in range(end, len(read)):
+            # start from beginning of read to end of read since no explicit "end"
+            for j in range(0, len(read)):
                 if not read[j] == sequence[match-start+j]:
                     mismatches += 1
                     if mismatches > num_allowed_edits:
@@ -58,7 +54,7 @@ def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subse
             if mismatches <= num_allowed_edits:
                 all_matches.add(match - start)
 
-    return list(all_matches), num_index_hits
+    return list(all_matches), num_index_hits, all_potential_matches, len(all_potential_matches)
 
 
 def query_subsequence_index(read, sequence, subsequence_index):
