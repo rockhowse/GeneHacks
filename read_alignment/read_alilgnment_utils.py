@@ -7,33 +7,6 @@ sys.path.append("../dna/")
 import dna.dna_utils as dnau
 import boyer_moore as bm
 
-def approximate_match_subseq(p, t, n, ival):
-    segment_length = int(round(len(p) / (n + 1)))
-    all_matches = set()
-    p_idx = SubseqIndex(t, segment_length, ival)
-    idx_hits = 0
-    for i in range(n + 1):
-        start = i
-        matches = p_idx.query(p[start:])
-
-        # Extend matching segments to see if whole p matches
-        for m in matches:
-            idx_hits += 1
-            if m < start or m - start + len(p) > len(t):
-                continue
-
-            mismatches = 0
-
-            for j in range(0, len(p)):
-                if not p[j] == t[m - start + j]:
-                    mismatches += 1
-                    if mismatches > n:
-                        break
-
-            if mismatches <= n:
-                all_matches.add(m - start)
-    return list(all_matches), idx_hits
-
 
 def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index):
     """
