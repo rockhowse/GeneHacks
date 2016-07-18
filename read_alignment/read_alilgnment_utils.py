@@ -7,6 +7,33 @@ sys.path.append("../dna/")
 import dna.dna_utils as dnau
 import boyer_moore as bm
 
+def approximate_match_subseq(p, t, n, ival):
+    segment_length = int(round(len(p) / (n + 1)))
+    all_matches = set()
+    p_idx = SubseqIndex(t, segment_length, ival)
+    idx_hits = 0
+    for i in range(n + 1):
+        start = i
+        matches = p_idx.query(p[start:])
+
+        # Extend matching segments to see if whole p matches
+        for m in matches:
+            idx_hits += 1
+            if m < start or m - start + len(p) > len(t):
+                continue
+
+            mismatches = 0
+
+            for j in range(0, len(p)):
+                if not p[j] == t[m - start + j]:
+                    mismatches += 1
+                    if mismatches > n:
+                        break
+
+            if mismatches <= n:
+                all_matches.add(m - start)
+    return list(all_matches), idx_hits
+
 
 def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index):
     """
@@ -15,24 +42,21 @@ def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subse
     :param read:
     :param sequence:
     :param num_allowed_edits:
+    :param interval:
     :param subsequence_index:
     :return:
     """
-
-    segment_length = int(round(len(read) / (num_allowed_edits + 1)))
     all_matches = set()
 
     num_index_hits = 0
-
-    all_potential_matches = set()
 
     # go through each segment
     for i in range(num_allowed_edits+1):
         start = i
         # don't need end since we do subseq on read
 
-        # query kmer_index using this segment
-        matches = query_subsequence_index(read[start:], sequence, subsequence_index)
+        # query subsequent_index using this segment from 0 - >num_allowed_edits + 1
+        matches = subsequence_index.query(read[start:])
 
         num_index_hits += len(matches)
 
@@ -54,28 +78,7 @@ def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subse
             if mismatches <= num_allowed_edits:
                 all_matches.add(match - start)
 
-    return list(all_matches), num_index_hits, all_potential_matches, len(all_potential_matches)
-
-
-def query_subsequence_index(read, sequence, subsequence_index):
-    """
-    queries a pre-subsequence indexed sequence with a desired read
-
-    :param read:
-    :param sequence:
-    :param subsequence_index:
-    :return:
-    """
-
-    k = subsequence_index.k
-    offsets = []
-
-    for i in subsequence_index.query(read):
-        # verification
-        if read[k:] == sequence[i + k:i + len(read)]:
-            offsets.append(i)
-
-    return offsets
+    return list(all_matches), num_index_hits
 
 
 def approximate_match_kmer_index(read, sequence, num_allowed_edits, kmer_index):

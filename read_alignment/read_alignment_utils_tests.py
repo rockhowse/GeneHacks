@@ -336,26 +336,16 @@ class TestReadAlignmentUtils(unittest.TestCase):
         self.assertEqual(num_alignments, 5)
         self.assertEqual(num_character_comparisons, 18)
 
-    def test_query_subsequence_index(self):
-
-        #example 1
-        p = 'to-morrow and to-morrow '
-        t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
-        subseq_index = ssi.SubseqIndex(t, 8, 3)
-        occurrences = rau.query_subsequence_index(p, t, subseq_index)
-
-        print(occurrences)
-        self.assertEqual(len(occurrences), 2)
-        self.assertEqual(occurrences[0], 0)
-        self.assertEqual(occurrences[1], 14)
-
     def test_approximate_match_subsequence_index(self):
 
         #example 1
         p = 'to-morrow and to-morrow '
         t = 'to-morrow and to-morrow and to-morrow creeps in this petty pace'
-        subsequence_index = ssi.SubseqIndex(t, 8, 3)
-        occurrences, num_index_hits, all_potential, num_potential = rau.approximate_match_subsequence_index(p, t, 2, subsequence_index)
+        num_allowed_edits = 2
+        i = 3
+        k = 8
+        subsequence_index = ssi.SubseqIndex(t, k, i)
+        occurrences, num_index_hits = rau.approximate_match_subsequence_index(p, t, num_allowed_edits, subsequence_index)
 
         print(occurrences)
         self.assertEqual(len(occurrences), 2)
@@ -373,8 +363,11 @@ class TestReadAlignmentUtils(unittest.TestCase):
 
         t = open(full_file_name).read()
         p = 'English measure backward'
-        subsequence_index = ssi.SubseqIndex(t, 8, 3)
-        occurrences, num_index_hits, all_potential, num_potential = rau.approximate_match_subsequence_index(p, t, 2, subsequence_index)
+        num_allowed_edits = 2
+        i = 3
+        k = 8
+        subsequence_index = ssi.SubseqIndex(t, k, i)
+        occurrences, num_index_hits = rau.approximate_match_subsequence_index(p, t, num_allowed_edits, subsequence_index)
 
         print(occurrences)
         self.assertEqual(len(occurrences), 1)
