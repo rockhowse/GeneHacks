@@ -23,3 +23,24 @@ def hamming_distance(str_1, str_2):
             distance += 1
 
     return distance
+
+
+def edit_distance_recursive(str_1, str_2):
+    """
+    recursive implementation of the edit distance algorithm
+
+    :param str_1:
+    :param str_2:
+    :return:
+    """
+
+    if len(str_1) == 0:
+        return len(str_2)
+    if len(str_2) == 0:
+        return len(str_1)
+
+    delta = 1 if str_1[-1] != str_2[-1] else 0
+
+    return min(edit_distance_recursive(str_1[:-1], str_2[:-1]) + delta,
+               edit_distance_recursive(str_1[:-1], str_2) + 1,
+               edit_distance_recursive(str_1, str_2[:-1]) + 1)

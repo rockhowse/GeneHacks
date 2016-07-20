@@ -444,10 +444,22 @@ def naive_exact_with_rc(read, sequence):
 
 def get_hamming_distance(str_1, str_2):
     """
-    returns the hamming distances of two strings
+    returns the hamming distance between two strings of equal lengths, -1 if the strings are different lengths
 
     :param str_1:
     :param str_2:
     :return:
     """
     return cd.hamming_distance(str_1, str_2)
+
+
+def get_edit_distance_recursive(str_1, str_2):
+    """
+    returns the edit distance between two strings using a recursive algorim (SLOW!!!!)
+
+    :param str_1:
+    :param str_2:
+    :return:
+    """
+
+    return cd.edit_distance_recursive(str_1, str_2)

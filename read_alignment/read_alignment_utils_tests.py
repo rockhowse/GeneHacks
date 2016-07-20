@@ -9,6 +9,7 @@ import read_alilgnment_utils as rau
 import boyer_moore as bm
 import kmer_index as kmi
 import subsequent_index as ssi
+import datetime as dt
 
 import fasta.fasta_utils as fau
 import dna.dna_utils as dnau
@@ -397,6 +398,43 @@ class TestReadAlignmentUtils(unittest.TestCase):
         hamming_distance = rau.get_hamming_distance(str_1, str_2)
 
         self.assertEqual(hamming_distance, -1)
+
+    def test_get_edit_distance_recursive(self):
+        """
+        Tests edit distance using the recursive solution (SLOW!!!)
+
+        :return:
+        """
+
+        str_1 = "GATCAACC"
+        str_2 = "GATTAAGG"
+
+        edit_distance = rau.get_edit_distance_recursive(str_1, str_2)
+
+        self.assertEqual(edit_distance, 3)
+
+        str_1 = "GATCAACC"
+        str_2 = "GATCAACCA"
+
+        edit_distance = rau.get_edit_distance_recursive(str_1, str_2)
+
+        self.assertEqual(edit_distance, 1)
+
+        str_1 = "Shakespear"
+        str_2 = "shake spear"
+
+        # test running time
+        start_time = dt.datetime.now()
+
+        edit_distance = rau.get_edit_distance_recursive(str_1, str_2)
+
+        end_time = dt.datetime.now()
+        total_time_sec = (end_time-start_time).total_seconds()
+
+        # we assert this takes longer than 1 second,
+        # NOTE: this is based on current generation hardware, pentium i7-4700 HQ, 2.4Ghz
+        self.assertGreaterEqual(total_time_sec, 1)
+
 """
     Test all read/alignment functions
 """

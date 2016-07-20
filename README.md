@@ -66,7 +66,6 @@ It supports the following functions:
 ## Package Dependencies
 
 * matplotlib ~ used for graphing
-
 # read_alignment
 Package containing utility data structures and functions and tests for aligning reads to sequences
 
@@ -90,6 +89,7 @@ It supports the following functions:
 * approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with the subsequence-index for exact matching per segment
 
 * get_hamming_distance(str_1, str_2) ~ returns the hamming distance between two strings of equal length, if the strings are not equal length, return -1
+* get_edit_distance_recursive(str_1, str_2) ~ returns the edit distance between two strings implemented using a recursive algorithm (SLOW!!!)
 
 ## Package Dependencies
 
