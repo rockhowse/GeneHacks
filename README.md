@@ -89,6 +89,8 @@ It supports the following functions:
 
 * approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index) ~ approximate matching function that uses num_allowed_edits+1 segments and pigeon-hole matching with the subsequence-index for exact matching per segment
 
+* get_hamming_distance(str_1, str_2) ~ returns the hamming distance between two strings of equal length, if the strings are not equal length, return -1
+
 ## Package Dependencies
 
 * bisect ~ used for bisect left (binary search), used in the k-mer and subsequence index implementations

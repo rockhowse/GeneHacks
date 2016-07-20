@@ -377,6 +377,26 @@ class TestReadAlignmentUtils(unittest.TestCase):
         print(num_index_hits)
         self.assertEqual(num_index_hits, 3)
 
+    def test_get_hamming_distance(self):
+        """
+        Tests hamming distance function
+
+        :return:
+        """
+
+        str_1 = "GATCAACCGGTAC"
+        str_2 = "GACTAAGGGGTAC"
+
+        hamming_distance = rau.get_hamming_distance(str_1, str_2)
+
+        self.assertEqual(hamming_distance, 4)
+
+        str_1 = "GATCAACCGGTA"
+        str_2 = "GATCAACCGGTAC"
+
+        hamming_distance = rau.get_hamming_distance(str_1, str_2)
+
+        self.assertEqual(hamming_distance, -1)
 """
     Test all read/alignment functions
 """

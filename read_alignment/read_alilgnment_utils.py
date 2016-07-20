@@ -6,6 +6,7 @@ sys.path.append("../dna/")
 
 import dna.dna_utils as dnau
 import boyer_moore as bm
+import calc_distance as cd
 
 
 def approximate_match_subsequence_index(read, sequence, num_allowed_edits, subsequence_index):
@@ -439,3 +440,14 @@ def naive_exact_with_rc(read, sequence):
 
     # convert occurrences to set then back to list to remove any duplicates
     return list(set(occurrences)), matches, mismatches
+
+
+def get_hamming_distance(str_1, str_2):
+    """
+    returns the hamming distances of two strings
+
+    :param str_1:
+    :param str_2:
+    :return:
+    """
+    return cd.hamming_distance(str_1, str_2)
