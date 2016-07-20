@@ -409,6 +409,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         str_1 = "GATCAACC"
         str_2 = "GATTAAGG"
 
+        ''' un-comment out for SLOW tests
         edit_distance = rau.get_edit_distance_recursive(str_1, str_2)
 
         self.assertEqual(edit_distance, 3)
@@ -419,6 +420,7 @@ class TestReadAlignmentUtils(unittest.TestCase):
         edit_distance = rau.get_edit_distance_recursive(str_1, str_2)
 
         self.assertEqual(edit_distance, 1)
+
 
         str_1 = "Shakespear"
         str_2 = "shake spear"
@@ -434,6 +436,43 @@ class TestReadAlignmentUtils(unittest.TestCase):
         # we assert this takes longer than 1 second,
         # NOTE: this is based on current generation hardware, pentium i7-4700 HQ, 2.4Ghz
         self.assertGreaterEqual(total_time_sec, 1)
+        '''
+
+    def test_get_edit_distance_dynamic_programming(self):
+        """
+        Tests edit distance using the dynamic programming solution
+
+        :return:
+        """
+
+        str_1 = "GATCAACC"
+        str_2 = "GATTAAGG"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming(str_1, str_2)
+
+        self.assertEqual(edit_distance, 3)
+
+        str_1 = "GATCAACC"
+        str_2 = "GATCAACCA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming(str_1, str_2)
+
+        self.assertEqual(edit_distance, 1)
+
+        str_1 = "Shakespear"
+        str_2 = "shake spear"
+
+        # test running time
+        start_time = dt.datetime.now()
+
+        edit_distance = rau.get_edit_distance_dynamic_programming(str_1, str_2)
+
+        end_time = dt.datetime.now()
+        total_time_sec = (end_time - start_time).total_seconds()
+
+        # we assert this takes less than 1 second,
+        # NOTE: this is based on current generation hardware, pentium i7-4700 HQ, 2.4Ghz
+        self.assertLessEqual(total_time_sec, 1)
 
 """
     Test all read/alignment functions

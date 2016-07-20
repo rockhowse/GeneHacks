@@ -455,7 +455,7 @@ def get_hamming_distance(str_1, str_2):
 
 def get_edit_distance_recursive(str_1, str_2):
     """
-    returns the edit distance between two strings using a recursive algorim (SLOW!!!!)
+    returns the edit distance between two strings using a recursive implementation (SLOW!!!!)
 
     :param str_1:
     :param str_2:
@@ -463,3 +463,16 @@ def get_edit_distance_recursive(str_1, str_2):
     """
 
     return cd.edit_distance_recursive(str_1, str_2)
+
+
+def get_edit_distance_dynamic_programming(str_1, str_2):
+    """
+    returns the edit distance between two strings using a dynamic programming implementation
+
+    :param str_1:
+    :param str_2:
+    :return:
+    """
+
+    return cd.edit_distance_dynamic_programming(str_1, str_2)
+
