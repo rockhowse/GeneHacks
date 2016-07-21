@@ -474,6 +474,53 @@ class TestReadAlignmentUtils(unittest.TestCase):
         # NOTE: this is based on current generation hardware, pentium i7-4700 HQ, 2.4Ghz
         self.assertLessEqual(total_time_sec, 1)
 
+    def test_get_edit_distance_dynamic_programming_global_alignment(self):
+        """
+        Tests edit distance using dynamic programming implemented with a scoring matrix that is DNA specific
+
+        :return:
+        """
+
+        str_1 = "TACCAGATTCGA"
+        str_2 = "TACCAGATTCGA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_global_alignment(str_1, str_2)
+
+        self.assertEqual(edit_distance, 0)
+
+        str_1 = "TACCAGATTCGA"
+        str_2 = "TACCAATTCGA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_global_alignment(str_1, str_2)
+
+        # skip should get distance of 8
+        self.assertEqual(edit_distance, 8)
+
+        str_1 = "TACCAGATTCGA"
+        str_2 = "TACCACATTCGA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_global_alignment(str_1, str_2)
+
+        # transversion penalty of 4
+        self.assertEqual(edit_distance, 4)
+
+        str_1 = "TACCAGATTCGA"
+        str_2 = "TACCAAATTCGA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_global_alignment(str_1, str_2)
+
+        # transition penalty of 2
+        self.assertEqual(edit_distance, 2)
+
+        str_1 = "TACCAGATTCGA"
+        str_2 = "TACCAAATTGA"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_global_alignment(str_1, str_2)
+
+        # transition penalty of 2 + skip penalty of 8
+        self.assertEqual(edit_distance, 10)
+
+        derp = 27
 """
     Test all read/alignment functions
 """

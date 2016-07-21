@@ -90,7 +90,8 @@ It supports the following functions:
 
 * get_hamming_distance(str_1, str_2) ~ returns the hamming distance between two strings of equal length, if the strings are not equal length, return -1
 * get_edit_distance_recursive(str_1, str_2) ~ returns the edit distance between two strings implemented using a recursive technique (SLOW!!!)
-* get_edit_distance_dynamic_programming(str_1, str_2) ~ returns the edit distance between wto strings implemented using a dynamic programming technique
+* get_edit_distance_dynamic_programming(str_1, str_2) ~ returns the edit distance between two strings implemented using a dynamic programming technique
+* get_edit_distance_dynamic_programming_global_alignment(str_1, str_2) ~ returns the global edit distance between two strings using a scoring matrix
 
 ## Package Dependencies
 

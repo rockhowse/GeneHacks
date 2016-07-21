@@ -476,3 +476,14 @@ def get_edit_distance_dynamic_programming(str_1, str_2):
 
     return cd.edit_distance_dynamic_programming(str_1, str_2)
 
+
+def get_edit_distance_dynamic_programming_global_alignment(str_1, str_2):
+    """
+    returns the edit distance between two strings using dynamic programming and a scoring matrix for global alignment
+
+    :param str_1:
+    :param str_2:
+    :return:
+    """
+
+    return cd.edit_distance_dynamic_programming_global_alignment(str_1, str_2)
