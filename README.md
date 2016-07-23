@@ -72,6 +72,12 @@ Package containing utility data structures and functions and tests for aligning 
 ## read_alignment_utils
 Utility data structures and functions for aligning reads to sequences
 
+It supports the following data structures:
+
+global_alignment_score ~ 2x2 penalty matrix with scores for alignment mis-matches using dynamic programming and global alignment. transitions (A<->G, C<->T) [2] vs tranversions [4] and gaps [8]
+KMerIndex ~ class used for calculating and querying a Kmer index on a given sequence
+BoyerMoore ~ class used to do Boyer-Moore pre-processing on a given read before doing alignment
+
 It supports the following functions:
 
 * naive_exact(read, sequence) ~ returns a list of offsets where the pattern occurs in the sequence as well as the number of matched and mismatched character reads
@@ -92,6 +98,9 @@ It supports the following functions:
 * get_edit_distance_recursive(str_1, str_2) ~ returns the edit distance between two strings implemented using a recursive technique (SLOW!!!)
 * get_edit_distance_dynamic_programming(str_1, str_2) ~ returns the edit distance between two strings implemented using a dynamic programming technique
 * get_edit_distance_dynamic_programming_global_alignment(str_1, str_2) ~ returns the global edit distance between two strings using a scoring matrix
+
+#assembly
+Package containting utility data structures and functions for dealing with genomic assembly
 
 ## Package Dependencies
 
