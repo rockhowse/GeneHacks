@@ -102,6 +102,10 @@ It supports the following functions:
 #assembly
 Package containting utility data structures and functions for dealing with genomic assembly
 
+It supports the following functions:
+
+overlap(str_1, str_2, min_overlap_length=3) ~ returns the number of overlapping characters between the suffix of str_1 overlaps and the prefix of str_2 with at LEAST min_overlap_len characters matching. Default of 3.
+
 ## Package Dependencies
 
 * bisect ~ used for bisect left (binary search), used in the k-mer and subsequence index implementations
