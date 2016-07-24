@@ -520,7 +520,21 @@ class TestReadAlignmentUtils(unittest.TestCase):
         # transition penalty of 2 + skip penalty of 8
         self.assertEqual(edit_distance, 10)
 
-        derp = 27
+    def test_edit_distance_dynamic_programming_approximate(self):
+        """
+        Tests the function that returns the edit distance allowing for approximate matching using the dynamic programming
+        implementation
+
+        :return:
+        """
+
+        p = "GCGTATGC"
+        t = "TATTGGCTATACGGTT"
+
+        edit_distance = rau.get_edit_distance_dynamic_programming_approximate(p, t)
+
+        self.assertEqual(edit_distance, 2)
+
 """
     Test all read/alignment functions
 """

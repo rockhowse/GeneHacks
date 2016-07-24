@@ -98,6 +98,7 @@ It supports the following functions:
 * get_edit_distance_recursive(str_1, str_2) ~ returns the edit distance between two strings implemented using a recursive technique (SLOW!!!)
 * get_edit_distance_dynamic_programming(str_1, str_2) ~ returns the edit distance between two strings implemented using a dynamic programming technique
 * get_edit_distance_dynamic_programming_global_alignment(str_1, str_2) ~ returns the global edit distance between two strings using a scoring matrix
+* get_edit_distance_dynamic_programming_approximate(str_1, str_2) ~ returns the approximate edit distance implemented using dynamic programming 
 
 #assembly
 Package containting utility data structures and functions for dealing with genomic assembly
@@ -106,6 +107,7 @@ It supports the following functions:
 
 overlap(str_1, str_2, min_overlap_length=3) ~ returns the number of overlapping characters between the suffix of str_1 overlaps and the prefix of str_2 with at LEAST min_overlap_len characters matching. Default of 3.
 naive_overlap_map(reads, min_overlap_length) ~ returns a map of overlapping reads using a simple naive suffix -> prefix overlapping structure with the nodes being the reads and the edges containing the number of characters that overlapped
+
 ## Package Dependencies
 
 * bisect ~ used for bisect left (binary search), used in the k-mer and subsequence index implementations
