@@ -58,11 +58,25 @@ class TestAssemblyUtils(unittest.TestCase):
         :return:
         """
 
+        # Test 1
         reads = ['ABCDEFG', 'EFGHIJ', 'HIJABC']
 
         all_pairs = au.overlap_all_pairs(reads, 3)
 
         self.assertEqual(len(all_pairs), 3)
+
+        # Test 2
+        reads = ["CGTACG", "TACGTA", "GTACGT", "ACGTAC", "GTACGA", "TACGAT"]
+
+        all_pairs = au.overlap_all_pairs(reads, 4)
+
+        self.assertEqual(len(all_pairs), 12)
+
+        # Test 3
+        all_pairs = au.overlap_all_pairs(reads, 5)
+
+        self.assertEqual(len(all_pairs), 6)
+
 """
     Test all assembly util functions
 """
