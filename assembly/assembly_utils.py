@@ -50,3 +50,42 @@ def naive_overlap_map(reads, min_overlap_length):
             overlaps[(read_1, read_2)] = overlap_length
 
     return overlaps
+
+
+def get_kmers(read, k):
+    """
+    return a set of kmers for the given read
+
+    :param read:
+    :return:
+    """
+
+    start = 0
+    kmers = set()
+
+    for i in range(len(read)-k+1):
+        kmers.add(read[start:start+k])
+        start += 1
+
+    return kmers
+
+def overlap_all_pairs(reads, k):
+    """
+    given a set of reads and kmer k, return an overlap map with all reads that contain exact matching
+
+    :param reads:
+    :param k:
+    :return:
+    """
+
+    kmer_map = {}
+
+    for i in range(len(reads)):
+        kmers = get_kmers(reads[i], k)
+        for kmer in kmers:
+            if kmer in kmer_map:
+                kmer_map[kmer].add(i)
+            else:
+                kmer_map[kmer] = set([i])
+
+    derp = 27

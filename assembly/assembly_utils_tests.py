@@ -50,6 +50,17 @@ class TestAssemblyUtils(unittest.TestCase):
         self.assertEqual(overlaps[(reads[0], reads[1])], 4)
         self.assertEqual(overlaps[(reads[2], reads[0])], 5)
 
+    def test_overlap_all_pairs(self):
+        """
+        Tests the abiliyt to get all overlaping paris given a set of reads and a minimum match length of k
+        :return:
+        """
+
+        reads = ['ABCDEFG', 'EFGHI', 'HIJABC']
+
+        all_pairs = au.overlap_all_pairs(reads, 3)
+
+        self.assertEqual(len(all_pairs), 3)
 """
     Test all assembly util functions
 """
