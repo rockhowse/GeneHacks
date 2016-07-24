@@ -1,6 +1,7 @@
 """
 Useful data structures and functions to help solve the DNA assembly problem
 """
+from itertools import permutations
 
 
 def overlap(str_1, str_2, min_overlap_length=3):
@@ -29,3 +30,23 @@ def overlap(str_1, str_2, min_overlap_length=3):
             return len(str_1)-start
 
         start += 1
+
+
+def naive_overlap_map(reads, min_overlap_length):
+    """
+    creates a dictionary of overlapped reads using naieve exact matching of suffxes from read_1 to prefixes of read_2
+
+    :param reads:
+    :param min_overlap_length:
+    :return:
+    """
+
+    overlaps = {}
+
+    for read_1, read_2 in permutations(reads, 2):
+        overlap_length = overlap(read_1, read_2, min_overlap_length=min_overlap_length)
+
+        if overlap_length > 0:
+            overlaps[(read_1, read_2)] = overlap_length
+
+    return overlaps
