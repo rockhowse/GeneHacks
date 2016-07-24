@@ -69,6 +69,7 @@ def get_kmers(read, k):
 
     return kmers
 
+
 def overlap_all_pairs(reads, k):
     """
     given a set of reads and kmer k, return an overlap map with all reads that contain exact matching
@@ -88,4 +89,22 @@ def overlap_all_pairs(reads, k):
             else:
                 kmer_map[kmer] = set([i])
 
-    derp = 27
+    matching_pairs = []
+    # look up the suffix of this read in the kmer_map
+    for i in range(len(reads)):
+        read_suffix = reads[i][-k:]
+
+        # if the read's suffix is in the kmer_map, we know there are overlaps
+        if read_suffix in kmer_map:
+
+            # go through the reads in the map for this suffix and overlap
+            for read_b in kmer_map[read_suffix]:
+
+                # don't match yourself
+                if i != read_b:
+                    matching_pairs.append((reads[i], reads[read_b]))
+    '''
+    for matching_pair in matching_pairs:
+        print matching_pairs
+    '''
+    return matching_pairs

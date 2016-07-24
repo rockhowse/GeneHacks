@@ -44,6 +44,8 @@ class TestAssemblyUtils(unittest.TestCase):
         reads = ["ACGGATGATC", "GATCAAGT", "TTCACGGA"]
         min_overlap_length = 3
 
+        overlaps = au.naive_overlap_map(reads, min_overlap_length)
+
         # there should now be two overlaps
         self.assertEqual(len(overlaps), 2)
 
@@ -56,7 +58,7 @@ class TestAssemblyUtils(unittest.TestCase):
         :return:
         """
 
-        reads = ['ABCDEFG', 'EFGHI', 'HIJABC']
+        reads = ['ABCDEFG', 'EFGHIJ', 'HIJABC']
 
         all_pairs = au.overlap_all_pairs(reads, 3)
 
