@@ -102,7 +102,13 @@ def overlap_all_pairs(reads, k):
 
                 # don't match yourself
                 if i != read_b:
-                    matching_pairs.append((reads[i], reads[read_b]))
+
+                    # might help if I called overlap() =P
+                    num_overlapping = overlap(reads[i], reads[read_b], k)
+
+                    # only add them in if they are overlapping
+                    if num_overlapping > 0:
+                        matching_pairs.append((reads[i], reads[read_b]))
     '''
     for matching_pair in matching_pairs:
         print matching_pairs
