@@ -105,9 +105,9 @@ Package containting utility data structures and functions for dealing with genom
 
 It supports the following functions:
 
-overlap(str_1, str_2, min_overlap_length=3) ~ returns the number of overlapping characters between the suffix of str_1 overlaps and the prefix of str_2 with at LEAST min_overlap_len characters matching. Default of 3.
-naive_overlap_map(reads, min_overlap_length) ~ returns a map of overlapping reads using a simple naive suffix -> prefix overlapping structure with the nodes being the reads and the edges containing the number of characters that overlapped
-overlap_all_pairs(reads, k) ~ given a list of reads and a kmer value of k, it returns a list of tuples representing each overlapping read that matches exact suffix to prefix 
+* overlap(str_1, str_2, min_overlap_length=3) ~ returns the number of overlapping characters between the suffix of str_1 overlaps and the prefix of str_2 with at LEAST min_overlap_len characters matching. Default of 3.
+* naive_overlap_map(reads, min_overlap_length) ~ returns a map of overlapping reads using a simple naive suffix -> prefix overlapping structure with the nodes being the reads and the edges containing the number of characters that overlapped
+* overlap_all_pairs(reads, k) ~ given a list of reads and a kmer value of k, it returns a list of tuples representing each overlapping read that matches exact suffix to prefix 
 
 ## Package Dependencies
 
