@@ -77,6 +77,16 @@ class TestAssemblyUtils(unittest.TestCase):
 
         self.assertEqual(len(all_pairs), 6)
 
+    def test_shortest_common_super_string(self):
+
+        string_set = ['ACGGTACGAGC', 'GAGCTTCGGA', 'GACACGG']
+
+        shortest_common_super_string = au.shortest_common_super_string(string_set)
+
+        self.assertEquals(shortest_common_super_string, 'GACACGGTACGAGCTTCGGA')
+
+
+
 """
     Test all assembly util functions
 """

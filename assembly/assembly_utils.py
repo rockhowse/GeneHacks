@@ -1,7 +1,7 @@
 """
 Useful data structures and functions to help solve the DNA assembly problem
 """
-from itertools import permutations
+from itertools import permutations as perms
 
 
 def overlap(str_1, str_2, min_overlap_length=3):
@@ -43,7 +43,7 @@ def naive_overlap_map(reads, min_overlap_length):
 
     overlaps = {}
 
-    for read_1, read_2 in permutations(reads, 2):
+    for read_1, read_2 in perms(reads, 2):
         overlap_length = overlap(read_1, read_2, min_overlap_length=min_overlap_length)
 
         if overlap_length > 0:
@@ -114,3 +114,35 @@ def overlap_all_pairs(reads, k):
         print matching_pairs
     '''
     return matching_pairs
+
+
+def shortest_common_super_string(set_of_strings):
+    """
+    given a set of strings, brute force the shortest common super string
+
+    SLOW!!!!!!
+
+    :param set_of_strings:
+    :return:
+    """
+
+    shortest_super_string = None
+
+    for set_of_strings_perms in perms(set_of_strings):
+
+        # start with first string
+        super_string = set_of_strings_perms[0]
+
+        # for every string BUT the first one
+        for i in range(len(set_of_strings)-1):
+
+            # get the overlap between the current string and the NEXT string with a minimum of 1
+            overlap_length = overlap(set_of_strings_perms[i], set_of_strings_perms[i+1], min_overlap_length=1)
+
+            # concatinate the overlaps
+            super_string += set_of_strings_perms[i+1][overlap_length:]
+
+        if shortest_super_string is None or len(super_string) < len(shortest_super_string):
+            shortest_super_string = super_string
+
+    return shortest_super_string
