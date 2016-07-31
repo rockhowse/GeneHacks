@@ -85,7 +85,43 @@ class TestAssemblyUtils(unittest.TestCase):
 
         self.assertEquals(shortest_common_super_string, 'GACACGGTACGAGCTTCGGA')
 
+    def test_shortest_common_super_string_list(self):
+        """
+        Tests the function that returns the list of ALL possible shortest common super strings for a given set of strings
 
+        :return:
+        """
+
+        # Example 1
+        strings = ['ABC', 'BCA', 'CAB']
+
+        shortest_common_super_string = au.shortest_common_super_string(strings)
+
+        self.assertEqual('ABCAB', shortest_common_super_string)
+
+        # Returns list of all superstrings that are tied for shortest
+        shortest_common_super_strings = au.shortest_common_super_string_list(strings)
+
+        self.assertEquals(len(shortest_common_super_strings), 3)
+        self.assertEqual(shortest_common_super_strings[0], 'ABCAB')
+        self.assertEqual(shortest_common_super_strings[1], 'BCABC')
+        self.assertEqual(shortest_common_super_strings[2], 'CABCA')
+
+        # Example 2
+        strings = ['GAT', 'TAG', 'TCG', 'TGC', 'AAT', 'ATA']
+
+        # Returns just one shortest superstring
+        shortest_common_super_string = au.shortest_common_super_string(strings)
+
+        self.assertEqual('TCGATGCAATAG', shortest_common_super_string)
+
+        # Returns list of all superstrings that are tied for shortest
+        shortest_common_super_strings = au.shortest_common_super_string_list(strings)
+
+        self.assertEquals(len(shortest_common_super_strings), 10)
+        self.assertEqual(shortest_common_super_strings[0], 'AATAGATCGTGC')
+        self.assertEqual(shortest_common_super_strings[5], 'TCGAATAGATGC')
+        self.assertEqual(shortest_common_super_strings[9], 'TGCAATCGATAG')
 
 """
     Test all assembly util functions

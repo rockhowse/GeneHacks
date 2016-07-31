@@ -101,7 +101,7 @@ It supports the following functions:
 * get_edit_distance_dynamic_programming_approximate(str_1, str_2) ~ returns the approximate edit distance implemented using dynamic programming 
 
 #assembly
-Package containting utility data structures and functions for dealing with genomic assembly
+Package containing utility data structures and functions for dealing with genomic assembly
 
 It supports the following functions:
 
@@ -109,6 +109,7 @@ It supports the following functions:
 * naive_overlap_map(reads, min_overlap_length) ~ returns a map of overlapping reads using a simple naive suffix -> prefix overlapping structure with the nodes being the reads and the edges containing the number of characters that overlapped
 * overlap_all_pairs(reads, k) ~ given a list of reads and a kmer value of k, it returns a list of tuples representing each overlapping read that matches exact suffix to prefix 
 * shortest_common_super_string(set_of_strings) ~ SLOW!!!! N! run time =*( <--- saddest panda
+* shortest_common_super_string_list(set_of_strings) ~ SLOW!! returns a list of all the possible shortest common super strings
 
 ## Package Dependencies
 

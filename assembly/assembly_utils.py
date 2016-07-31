@@ -1,7 +1,7 @@
 """
 Useful data structures and functions to help solve the DNA assembly problem
 """
-from itertools import permutations as perms
+from itertools import permutations
 
 
 def overlap(str_1, str_2, min_overlap_length=3):
@@ -43,7 +43,7 @@ def naive_overlap_map(reads, min_overlap_length):
 
     overlaps = {}
 
-    for read_1, read_2 in perms(reads, 2):
+    for read_1, read_2 in permutations(reads, 2):
         overlap_length = overlap(read_1, read_2, min_overlap_length=min_overlap_length)
 
         if overlap_length > 0:
@@ -128,7 +128,7 @@ def shortest_common_super_string(set_of_strings):
 
     shortest_super_string = None
 
-    for set_of_strings_perms in perms(set_of_strings):
+    for set_of_strings_perms in permutations(set_of_strings):
 
         # start with first string
         super_string = set_of_strings_perms[0]
@@ -139,7 +139,7 @@ def shortest_common_super_string(set_of_strings):
             # get the overlap between the current string and the NEXT string with a minimum of 1
             overlap_length = overlap(set_of_strings_perms[i], set_of_strings_perms[i+1], min_overlap_length=1)
 
-            # concatinate the overlaps
+            # concatenate the overlaps
             super_string += set_of_strings_perms[i+1][overlap_length:]
 
         if shortest_super_string is None or len(super_string) < len(shortest_super_string):
@@ -162,7 +162,7 @@ def shortest_common_super_string_list(set_of_strings):
     shortest_super_string = None
     shortest_super_strings = set()
 
-    for set_of_strings_perms in perms(set_of_strings):
+    for set_of_strings_perms in permutations(set_of_strings):
 
         # start with first string
         super_string = set_of_strings_perms[0]
@@ -173,21 +173,27 @@ def shortest_common_super_string_list(set_of_strings):
             # get the overlap between the current string and the NEXT string with a minimum of 1
             overlap_length = overlap(set_of_strings_perms[i], set_of_strings_perms[i+1], min_overlap_length=1)
 
-            # concatinate the overlaps
+            # concatenate the overlaps
             super_string += set_of_strings_perms[i+1][overlap_length:]
+
+        # add in strings that are less than OR equal to the shortest one
+        if shortest_super_string is None or len(super_string) <= len(shortest_super_string):
+            shortest_super_strings.add(super_string)
 
         if shortest_super_string is None or len(super_string) < len(shortest_super_string):
             shortest_super_string = super_string
 
-        # add in strings that are less than OR equal to the shortest one
-        if shortest_super_string is None or len(super_string) <= len(shortest_super_string):
-            shortest_super_strings.add(shortest_super_string)
-
     shortest_length = len(shortest_super_string)
 
-    # filter out the ones that are NOT the length of the shortest one
+    remove_vals = []
+
+    # build list of indexes to remove
     for cur_string in shortest_super_strings:
         if len(cur_string) > shortest_length:
-            shortest_super_strings.remove(cur_string)
+            remove_vals.append(cur_string)
 
-    return shortest_super_strings
+    # remove any that are longer than shortest
+    for remove_val in remove_vals:
+        shortest_super_strings.remove(remove_val)
+
+    return sorted(list(shortest_super_strings))
