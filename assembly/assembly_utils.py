@@ -146,3 +146,48 @@ def shortest_common_super_string(set_of_strings):
             shortest_super_string = super_string
 
     return shortest_super_string
+
+
+def shortest_common_super_string_list(set_of_strings):
+    """
+    given a set of strings, brute force the shortest common super string and return ALL strings
+    who are the length of the shortest common super string
+
+    SLOW!!!!!!
+
+    :param set_of_strings:
+    :return:
+    """
+
+    shortest_super_string = None
+    shortest_super_strings = set()
+
+    for set_of_strings_perms in perms(set_of_strings):
+
+        # start with first string
+        super_string = set_of_strings_perms[0]
+
+        # for every string BUT the first one
+        for i in range(len(set_of_strings)-1):
+
+            # get the overlap between the current string and the NEXT string with a minimum of 1
+            overlap_length = overlap(set_of_strings_perms[i], set_of_strings_perms[i+1], min_overlap_length=1)
+
+            # concatinate the overlaps
+            super_string += set_of_strings_perms[i+1][overlap_length:]
+
+        if shortest_super_string is None or len(super_string) < len(shortest_super_string):
+            shortest_super_string = super_string
+
+        # add in strings that are less than OR equal to the shortest one
+        if shortest_super_string is None or len(super_string) <= len(shortest_super_string):
+            shortest_super_strings.add(shortest_super_string)
+
+    shortest_length = len(shortest_super_string)
+
+    # filter out the ones that are NOT the length of the shortest one
+    for cur_string in shortest_super_strings:
+        if len(cur_string) > shortest_length:
+            shortest_super_strings.remove(cur_string)
+
+    return shortest_super_strings
