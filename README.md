@@ -110,6 +110,9 @@ It supports the following functions:
 * overlap_all_pairs(reads, k) ~ given a list of reads and a kmer value of k, it returns a list of tuples representing each overlapping read that matches exact suffix to prefix 
 * shortest_common_super_string(set_of_strings) ~ SLOW!!!! N! run time =*( <--- saddest panda
 * shortest_common_super_string_list(set_of_strings) ~ SLOW!! returns a list of all the possible shortest common super strings
+* pick_maximal_overlap(reads, k) ~ Finds the two reads with the maximal overlap, combines them and returns both reads and the overlap length
+* greedy_shortest_common_super_string(reads, k) ~ relies on the pick_maximal_overlap() function, returns the shortest common super string in a "greedy fasion", will need to find optimal value of k
+
 
 ## Package Dependencies
 

@@ -85,6 +85,20 @@ class TestAssemblyUtils(unittest.TestCase):
 
         self.assertEquals(shortest_common_super_string, 'GACACGGTACGAGCTTCGGA')
 
+    def test_greedy_shortest_common_super_string(self):
+        """
+        Tests the greedy implementation of the shortest common super string of a given set of strings
+
+        :return:
+        """
+
+        strings = ['ABC', 'BCA', 'CAB']
+        k = 2
+
+        shortest_common_super_string = au.greedy_shortest_common_super_string(strings, k)
+
+        self.assertEqual('CABCA', shortest_common_super_string)
+
     def test_shortest_common_super_string_list(self):
         """
         Tests the function that returns the list of ALL possible shortest common super strings for a given set of strings
@@ -122,6 +136,7 @@ class TestAssemblyUtils(unittest.TestCase):
         self.assertEqual(shortest_common_super_strings[0], 'AATAGATCGTGC')
         self.assertEqual(shortest_common_super_strings[5], 'TCGAATAGATGC')
         self.assertEqual(shortest_common_super_strings[9], 'TGCAATCGATAG')
+
 
 """
     Test all assembly util functions

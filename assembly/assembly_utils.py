@@ -148,6 +148,55 @@ def shortest_common_super_string(set_of_strings):
     return shortest_super_string
 
 
+def pick_maximal_overlap(reads, k):
+    """
+    Finds the two reads with the maximal overlap, combines them and returns both reads and the overlap length
+
+    :param reads:
+    :param k:
+    :return:
+    """
+    reada, readb = None, None
+
+    best_overlap_length = 0
+
+    for a,b in permutations(reads, 2):
+        overlap_length = overlap(a, b, min_overlap_length=k)
+
+        # only returns the FIRST overlap length we run into
+        if overlap_length > best_overlap_length:
+            reada, readb = a, b
+
+            best_overlap_length = overlap_length
+
+    return reada, readb, best_overlap_length
+
+
+def greedy_shortest_common_super_string(reads, k):
+    """
+    Greedy implementation of the shortest common super string, may not return the "shortest" but is much faster than
+    "brute force" method.
+
+    :param reads:
+    :param k:
+    :return:
+    """
+    read_a, read_b, overlap_length = pick_maximal_overlap(reads, k)
+
+    # remove the two that had the longest overlap
+    while overlap_length > 0:
+        reads.remove(read_a)
+        reads.remove(read_b)
+
+        # now add in the "best overlap" for further consideration
+        reads.append(read_a + read_b[overlap_length:])
+
+        # recalculate the reads using the newly modified list
+        read_a, read_b, overlap_length = pick_maximal_overlap(reads, k)
+
+    return ''.join(reads)
+
+
 def shortest_common_super_string_list(set_of_strings):
     """
     given a set of strings, brute force the shortest common super string and return ALL strings
@@ -197,3 +246,4 @@ def shortest_common_super_string_list(set_of_strings):
         shortest_super_strings.remove(remove_val)
 
     return sorted(list(shortest_super_strings))
+
