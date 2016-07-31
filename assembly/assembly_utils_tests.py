@@ -97,7 +97,27 @@ class TestAssemblyUtils(unittest.TestCase):
 
         shortest_common_super_string = au.greedy_shortest_common_super_string(strings, k)
 
-        self.assertEqual('CABCA', shortest_common_super_string)
+        self.assertEqual(shortest_common_super_string, 'CABCA')
+
+        # Example of NON-shortest resturn with a k value of 1
+
+        strings = ['ABCD', 'CDBC', 'BCDA']
+        k = 1
+
+        shortest_common_super_string = au.greedy_shortest_common_super_string(strings, k)
+
+        self.assertEqual(shortest_common_super_string, 'CDBCABCDA')
+
+        # have to reset this because greedy_shortest_common_super_string() modifies the underlying list
+        strings = ['ABCD', 'CDBC', 'BCDA']
+
+        shortest_common_super_string_2 = au.shortest_common_super_string(strings)
+
+        # ACTUAL shortest common super string
+        self.assertEqual(shortest_common_super_string_2, 'ABCDBCDA')
+
+        # neither match, issue with greedy algorithm
+        self.assertNotEqual(shortest_common_super_string, shortest_common_super_string_2)
 
     def test_shortest_common_super_string_list(self):
         """
