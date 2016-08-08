@@ -197,7 +197,7 @@ def greedy_shortest_common_super_string(reads, k):
     return ''.join(reads)
 
 
-def deb_bruin_ize(read, k)
+def deb_bruin_ize(read, k):
     """
     Given a string, create a de-bruijn graph
 
