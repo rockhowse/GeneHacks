@@ -156,7 +156,7 @@ def pick_maximal_overlap(reads, k):
     :param k:
     :return:
     """
-    reada, readb = None, None
+    read_a, read_b = None, None
 
     best_overlap_length = 0
 
@@ -165,11 +165,11 @@ def pick_maximal_overlap(reads, k):
 
         # only returns the FIRST overlap length we run into
         if overlap_length > best_overlap_length:
-            reada, readb = a, b
+            read_a, read_b = a, b
 
             best_overlap_length = overlap_length
 
-    return reada, readb, best_overlap_length
+    return read_a, read_b, best_overlap_length
 
 
 def greedy_shortest_common_super_string(reads, k):
@@ -195,6 +195,26 @@ def greedy_shortest_common_super_string(reads, k):
         read_a, read_b, overlap_length = pick_maximal_overlap(reads, k)
 
     return ''.join(reads)
+
+
+def deb_bruin_ize(read, k)
+    """
+    Given a string, create a de-bruijn graph
+
+    :param read:
+    :param k:
+    :return:
+    """
+    edges = []
+    nodes = set()
+
+    # go through and set up nodes/edges with kmers of size k
+    for i in range(len(read) - k + 1):
+        edges.append((read[i:i+k-1], read[i+1:i+k]))
+        nodes.add(read[i:i+k-1])
+        nodes.add(read[i+1:i+k])
+
+    return nodes, edges
 
 
 def shortest_common_super_string_list(set_of_strings):
