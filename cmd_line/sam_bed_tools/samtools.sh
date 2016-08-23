@@ -53,3 +53,23 @@ samtools view ./data/athal_wu_0_A.extracted.bam | cut -f7 | grep -c '='
 
 # get the number of spliced alignments in the extracted region
 samtools view ./data/athal_wu_0_A.extracted.bam | cut -f6 | grep -c 'N'
+
+# get the number of sequences in the original genome
+samtools view -H ./data/athal_wu_0_A.bam | grep -c "SN:"
+
+# get the length of the first sequence in the genome
+samtools view -H ./data/athal_wu_0_A.bam | grep "SN:" | head -n 1
+
+# get the alignment tool used to generate the alignments
+# get the ID
+samtools view -H ./data/athal_wu_0_A.bam | grep "^@PG"
+
+# get the read id of the first alignment
+#This information is shown in column 1 of the first alignment record in the SAM file:
+samtools view ./data/athal_wu_0_A.bam | head -1 | cut -f1
+
+# get the start position of the read mate on the genome
+# The location of the read’s mate is contained in column 7 (chrom) and column 8 (start position), if the mate is mapped. If the mate is unmapped, it will be marked with a ‘*’ in column 7. To answer the question, we will need to observe these fields in the first SAM record:
+samtools view ./data/athal_wu_0_A.bam | head -1
+
+
