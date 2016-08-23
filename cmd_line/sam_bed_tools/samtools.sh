@@ -37,7 +37,11 @@ samtools index ./data/athal_wu_0_A.sorted.bam
 
 #extract specific range using bed file
 # make sure to include header
+# WRONG gives correct counts but invalid read in bedtools
 samtools view -h -L ./data/athal_wu_0_A.bed ./data/athal_wu_0_A.sorted.bam > ./data/athal_wu_0_A.extracted.bam 
+
+#The option ‘-b’ will generate output in BAM format. The resulting BAM file will be sorted, so it can be indexed directly if needed.Common pitfalls: make sure to specify the correct reference sequence (‘Chr3’, not ‘chr3’) and exclude ‘,’ when representing the query coordinates. Also, make sure to use the sorted and index BAM file. To determine the number of alignments in the new (region) file, we can use the same commands as for Q1, e.g.:
+samtools view -b ./data/athal_wu_0_A.sorted.bam "Chr3:11777000-11794000" > ./data/athal_wu_0_A.region.bam
 
 #get number of alignments in extracted region
 samtools view ./data/athal_wu_0_A.extracted.bam | cut -f3 | grep -v '*' | wc -l
