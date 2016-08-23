@@ -28,3 +28,12 @@ samtools view ./data/athal_wu_0_A.bam | cut -f7 | grep -c '='
 # find the number of spliced alignments
 # value of 'N' in CIGAR field 6
 samtools view ./data/athal_wu_0_A.bam | cut -f6 | grep -c 'N'
+
+# sort our bam file so we can index it
+samtools sort ./data/athal_wu_0_A.bam ./data/athal_wu_0_A.sorted
+
+#index sorted file (generates .bai file)
+samtools index ./data/athal_wu_0_A.sorted.bam
+
+#extract specific range using bed file
+samtools view -L ./data/athal_wu_0_A.bed ./data/athal_wu_0_A.sorted.bam > ./data/athal_wu_0_A.extracted.bam 
