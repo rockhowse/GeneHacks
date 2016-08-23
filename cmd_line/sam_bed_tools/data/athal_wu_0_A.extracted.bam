@@ -1,3 +1,17 @@
+@HD	VN:1.0	GO:none	SO:coordinate
+@SQ	SN:Chr1	LN:29923332	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:Chr2	LN:19386101	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:Chr3	LN:23042017	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:Chr4	LN:18307997	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:Chr5	LN:26567293	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:chloroplast	LN:154478	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@SQ	SN:mitochondria	LN:366924	AS:wu_0.v7.fas	SP:wu_0.v7.fas
+@RG	ID:H100223_GAII05_0002	PL:SLX	LB:wu_PII	PI:400	DS:wu_0_Genome	SM:wu_0
+@RG	ID:Wii_PER01	PL:SLX	LB:wu_phaseI	PI:400	DS:wu_0_Genome	SM:wu_0
+@RG	ID:Wii_PER02	PL:SLX	LB:wu_phaseI	PI:400	DS:wu_0_Genome	SM:wu_0
+@RG	ID:Wii_SR03	PL:SLX	LB:wu_phaseI	PI:400	DS:wu_0_Genome	SM:wu_0
+@PG	ID:stampy	VN:1.0.3_(r627)	CL:-g /lustre/scratch103/sanger/xcg/tmp/tmp.zYfXz26246 -h /lustre/scratch103/sanger/xcg/tmp/tmp.zYfXz26246 --readgroup=ID:Wii_PER01,LB:wu_phaseI,SM:wu_0,PI:400,PL:SLX,DS:wu_0_Genome --bwaoptions=-q10 /lustre/scratch103/sanger/xcg/wu_0.v7.fas -o /lustre/scratch103/sanger/xcg/wu_0/A/aln_A1.sp0.sam -M /lustre/scratch103/sanger/xcg/wu_0/read_1_1.sp0.fq.gz /lustre/scratch103/sanger/xcg/wu_0/read_1_2.sp0.fq.gz
+@CO	TM:Fri, 17 Sep 2010 12:20:13 BST	WD:/lustre/scratch103/sanger/xcg/wu_0/self	HN:bc-16-1-07.internal.sanger.ac.uk	UN:xcg
 unknown:3:76:339:1714#0/1	0	Chr3	11777470	9	36M	*	0	0	CTTAATTTGAAATTGTTAGTCTATTGTGTGATATGA	BAABB:BB@88@@<?>B@>:BAA@8>>@06B?=2?>	UQ:i:69	RG:Z:Wii_SR03
 GAII05_0002:1:61:4766:5403#0	101	Chr3	11777578	0	*	=	11777578	0	AATACCGGTTCCACCACTCTTACGGAAATAGCAGCGCAAATGCTTTGTCTG	CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC@@CCBCACBBCC	MQ:i:1	XQ:i:301	RG:Z:H100223_GAII05_0002
 GAII05_0002:1:61:4766:5403#0	153	Chr3	11777578	1	9M8I20M7I7M	=	11777578	0	GTTCCATATCTGATTAACAATATACTCATTGATAAAATGGTAATTTTTAAA	CC>CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC	UQ:i:301	RG:Z:H100223_GAII05_0002
