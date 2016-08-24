@@ -11,7 +11,7 @@ more ./data/athal_wu_0_A.overlaps.bed | wc -l
 # how many have 10 bases or longer
 #The size of the overlap is listed in column 22 of the ‘overlaps.bed’ file. To determine those longer than 10 bases, we extract the column, sort numerically in decreasing order, and simply determine by visual inspection of the file the number of such records. For instance, in ‘vim’ we search for the first line listing ‘9’ (‘:/9’), then determine its line number (Ctrl+g). Alternatively, one can use grep with option ‘-n’ to list the lines and corresponding line numbers:
 # make sure to subtract one from this answer!
-cut -f22 ./data/athal_wu_0_A.overlaps.bed | sort -nrk1 | grep "^9" | head -1
+cut -f22 ./data/athal_wu_0_A.overlaps.bed | sort -nrk1 | grep -n "^9" | head -1
 
 # get the number of annotations that overlap the alignments
 # Columns 1-12 define the alignments:
@@ -22,4 +22,7 @@ cut -f1-12 ./data/athal_wu_0_A.overlaps.bed | sort -u | wc -l
 #Columns 13-21 define the exons:
 cut -f13-21 ./data/athal_wu_0_A.overlaps.bed | sort -u | wc -l
 
+# if convertint from .gtf to BED how many records would there be
+#This question simply asks for the number of transcripts in the annotation file, since the BED format would represent each transcript on one line. This information can be obtained from column 9 in the GTF file:
+cut -f9 ./data/athal_wu_0_A_annot.gtf | cut -d ' ' -f1,2 | sort -u | wc -l
 
