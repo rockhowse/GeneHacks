@@ -27,14 +27,21 @@ cat ./data/wu_0.v7.fas | grep ">"
 
 # create directory for wu_0
 # uncommented out as no need to create wu_0 dir
-# mkdir ./data/wu_0
+#mkdir ./data/wu_0
 
 # generate bowtie2 index of wu_0_A genome 
 # uncommented out as it takes 1.15 min
-# bowtie2-build ./data/wu_0.v7.fas ./data/wu_0/wu_0
+#bowtie2-build ./data/wu_0.v7.fas ./data/wu_0/wu_0
 
 #How many reads were in the original fastq file?
 # divide this number by 4 (4 lines per read in fastq format)
-cat wu_0_A_wgs.fastq | wc -l
+cat ./data/wu_0_A_wgs.fastq | wc -l
 
+#how many alignments  are reported for the original(full-match) setting?
+#excle lines in the file containing unmapped reads
+bowtie2 -p 4 -x ./data/wu_0/wu_0 ./data/wu_0_A_wgs.fastq -S ./data/wu_0_A_wgs.bt2.sam
+cat ./data/wu_0_A_wgs.bt2.sam | grep -v "^@" | cut -f3 | grep -v "*" | wc -l
 
+#How many matches (alignments) were reported with the local-match setting? Exclude lines in the file containing unmapped reads.
+bowtie2 --local -p 4 -x ./data/wu_0/wu_0 ./data/wu_0_A_wgs.fastq -S ./data/wu_0_A_wgs.bt2.local.sam
+cat ./data/wu_0_A_wgs.bt2.local.sam | grep -v "^@" | cut -f3 | grep -v "*" | wc -l
