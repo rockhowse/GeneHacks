@@ -1,5 +1,5 @@
 # Zika Analyis ~ 2016-09-10
-Practice analizing .fasta formatted data in Python using zika sequencing data from Anderson Lab
+Practice analyzing .fasta formatted data in Python using zika sequencing data from Anderson Lab
 
 http://andersen-lab.com/zika-sequence-local-florida-transmission/
 
