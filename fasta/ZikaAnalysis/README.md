@@ -14,18 +14,18 @@ It consists of a simple python script that does the following:
 
 The results are shown below:
 
->10467|USA_ZL2_Hu0015.fasta
->10463|Cuba_ZF10_010U.fasta
+>10467|USA_ZL2_Hu0015.fasta  
+>10463|Cuba_ZF10_010U.fasta  
 
->num_diff: 9
->   50|['G', 'A']
->  930|['T', 'C']
-> 5624|['T', 'C']
-> 9117|['C', 'T']
-> 9317|['G', 'A']
->10463|['A', '_']
->10464|['G', '_']
->10465|['A', '_']
->10466|['A', '_']
+>num_diff: 9  
+>   50|['G', 'A']  
+>  930|['T', 'C']  
+> 5624|['T', 'C']  
+> 9117|['C', 'T']  
+> 9317|['G', 'A']  
+>10463|['A', '_']  
+>10464|['G', '_']  
+>10465|['A', '_']  
+>10466|['A', '_']  
 
 You can see that the comparison is very basic, however it does show that the US seq contains another 4 nucleotides and 5 substitutions resulting in a total of 9 differences.
