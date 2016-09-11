@@ -9,8 +9,9 @@ sequence USA_ZL2_Hu0015 compared to that found in a previous sequence Cuba_ZF10_
 It consists of a simple python script that does the following:
 
 * Reads in the .fasta data for both sequences using the header as element 0 and the seq as element 1
-* It then goes through each seq and chooses the one with the largest base pairs
-* Lastly, it iterates using the largest base pair and keeps track of mismatches and missing nucleotides
+* It then goes through each seq and chooses the one with the largest number of base pairs
+* Then, it iterates using the largest base pair and keeps track of mismatches and missing nucleotides
+* Lastly, it itterates through the list of mismiathes and prints them out sorted by index
 
 The results are shown below:
 
