@@ -56,5 +56,18 @@ samtools flagstat ./data/wu_0_A_wgs.bt2.local.sam
 samtools view ./data/wu_0_A_wgs.bt2.sam | cut -f6 | grep -cE 'I|D'
 samtools view ./data/wu_0_A_wgs.bt2.local.sam | cut -f6 | grep -cE 'I|D'
 
+# get a number of entries for specific chromosome
+# convert the .sam file to .bam, need the genome
+samtools view -bT ./data/wu_0.v7.fas ./data/wu_0_A_wgs.bt2.sam ./data/wu_0_A_wgs.bt2.bam
+
+#first we need to sort the data
+samtools sort ./data/wu_0_A_wgs.bt2.bam ./data/wu_0_A_wgs.bt2.sorted
+
+# generate the mpilup format
+# use -u and -v for uncompressed VCF format
+samtools mpileup -f ./data/wu_0.v7.fas -uv ./data/wu_0_A_wgs.bt2.sorted.bam > ./data/wu_0_A_wgs.mpileup.vcf
+
+# count the number of entries in the VCF file for Chr3
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1 | grep -c "%Chr3"
 
 
