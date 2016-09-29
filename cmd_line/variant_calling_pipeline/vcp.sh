@@ -70,4 +70,15 @@ samtools mpileup -f ./data/wu_0.v7.fas -uv ./data/wu_0_A_wgs.bt2.sorted.bam > ./
 # count the number of entries in the VCF file for specific chromosome
 cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1 | grep -c "%Chr3"
 
+# get the number of entries that contain the letter of the genome
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f4 | grep -c "^A$"
+
+#Get number of entries with specified number of supporting reads (depth)
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | grep -c "DP=20"
+
+#Get number of entries that represent indels
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | grep -c "INDEL"
+
+
+
 
