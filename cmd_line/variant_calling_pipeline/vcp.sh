@@ -36,12 +36,19 @@ cat ./data/wu_0.v7.fas | grep ">"
 #How many reads were in the original fastq file?
 # divide this number by 4 (4 lines per read in fastq format)
 cat ./data/wu_0_A_wgs.fastq | wc -l
+# could also use this and take "mapped"
+samtools flagstat ./data/wu_0_A_wgs.bt2.sam
 
 #how many alignments  are reported for the original(full-match) setting?
 #excle lines in the file containing unmapped reads
 bowtie2 -p 4 -x ./data/wu_0/wu_0 ./data/wu_0_A_wgs.fastq -S ./data/wu_0_A_wgs.bt2.sam
 cat ./data/wu_0_A_wgs.bt2.sam | grep -v "^@" | cut -f3 | grep -v "*" | wc -l
+# could also use this and tape "QC passed"
+samtools flagstat ./data/wu_0_A_wgs.bt2.sam
 
 #How many matches (alignments) were reported with the local-match setting? Exclude lines in the file containing unmapped reads.
 bowtie2 --local -p 4 -x ./data/wu_0/wu_0 ./data/wu_0_A_wgs.fastq -S ./data/wu_0_A_wgs.bt2.local.sam
 cat ./data/wu_0_A_wgs.bt2.local.sam | grep -v "^@" | cut -f3 | grep -v "*" | wc -l
+# could also use this and take "mapped"
+samtools flagstat ./data/wu_0_A_wgs.bt2.local.sam
+
