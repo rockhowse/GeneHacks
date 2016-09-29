@@ -52,3 +52,9 @@ cat ./data/wu_0_A_wgs.bt2.local.sam | grep -v "^@" | cut -f3 | grep -v "*" | wc 
 # could also use this and take "mapped"
 samtools flagstat ./data/wu_0_A_wgs.bt2.local.sam
 
+#how many alignments contained insertions and/or deletions
+samtools view ./data/wu_0_A_wgs.bt2.sam | cut -f6 | grep -cE 'I|D'
+samtools view ./data/wu_0_A_wgs.bt2.local.sam | cut -f6 | grep -cE 'I|D'
+
+
+
