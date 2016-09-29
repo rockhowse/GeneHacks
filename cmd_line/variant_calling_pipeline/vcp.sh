@@ -67,7 +67,7 @@ samtools sort ./data/wu_0_A_wgs.bt2.bam ./data/wu_0_A_wgs.bt2.sorted
 # use -u and -v for uncompressed VCF format
 samtools mpileup -f ./data/wu_0.v7.fas -uv ./data/wu_0_A_wgs.bt2.sorted.bam > ./data/wu_0_A_wgs.mpileup.vcf
 
-# count the number of entries in the VCF file for Chr3
+# count the number of entries in the VCF file for specific chromosome
 cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1 | grep -c "%Chr3"
 
 
