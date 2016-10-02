@@ -58,7 +58,7 @@ samtools view ./data/wu_0_A_wgs.bt2.local.sam | cut -f6 | grep -cE 'I|D'
 
 # get a number of entries for specific chromosome
 # convert the .sam file to .bam, need the genome
-samtools view -bT ./data/wu_0.v7.fas ./data/wu_0_A_wgs.bt2.sam ./data/wu_0_A_wgs.bt2.bam
+samtools view -bT ./data/wu_0.v7.fas ./data/wu_0_A_wgs.bt2.sam > ./data/wu_0_A_wgs.bt2.bam
 
 #first we need to sort the data
 samtools sort ./data/wu_0_A_wgs.bt2.bam ./data/wu_0_A_wgs.bt2.sorted
@@ -68,7 +68,7 @@ samtools sort ./data/wu_0_A_wgs.bt2.bam ./data/wu_0_A_wgs.bt2.sorted
 samtools mpileup -f ./data/wu_0.v7.fas -uv ./data/wu_0_A_wgs.bt2.sorted.bam > ./data/wu_0_A_wgs.mpileup.vcf
 
 # count the number of entries in the VCF file for specific chromosome
-cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1 | grep -c "%Chr3"
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1 | grep -c "^Chr3"
 
 # get the number of entries that contain the letter of the genome
 cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f4 | grep -c "^A$"
