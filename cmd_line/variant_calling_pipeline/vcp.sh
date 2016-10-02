@@ -79,6 +79,31 @@ cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | grep -c "DP=20"
 #Get number of entries that represent indels
 cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | grep -c "INDEL"
 
+#Get number of entries for specific position
+#mpilup has chr and position data in fields 1 and 2
+#yse $ for end of string for position
+cat ./data/wu_0_A_wgs.mpileup.vcf | grep -v "^#" | cut -f1,2 | grep -Pc "^Chr1\t175672$"
 
+#how many variants are on a specific Chromosome
+#get data in BCF format
+samtools mpileup -f ./data/wu_0.v7.fas -g ./data/wu_0_A_wgs.bt2.sorted.bam > ./data/wu_0_A_wgs.mpileup.bcf
 
+#cal varients using bcftools call, multi-allelic (-m), variants only (-v) and getting uncompressed vCF ("-O -v")
+bcftools call -m -v -Ov ./data/wu_0_A_wgs.mpileup.bcf > ./data/wu_0_A_wgs.mpileup.2.vcf
+
+# now we can get variants by filtering on the field 1
+cat ./data/wu_0_A_wgs.mpileup.2.vcf | grep -v "^#" | cut -f1 | grep "Chr3" | wc -l
+
+#number of variants as TSNP of speific type
+cat ./data/wu_0_A_wgs.mpileup.2.vcf | grep -v "^#" | cut -f4,5 | grep -P "^A\tT$" | wc -l
+
+#number of variants that are indels
+cat ./data/wu_0_A_wgs.mpileup.2.vcf | grep -v "^#" | grep -c "INDEL"
+
+#number of variant entries at a specific depth
+cat ./data/wu_0_A_wgs.mpileup.2.vcf | grep -v "^#" | grep -c "DP=20"
+
+#type of variant at specific position on a given chromosome
+#use your mind-brain to grock this one
+cat ./data/wu_0_A_wgs.mpileup.2.vcf | grep -v "^#" | grep "Chr3" | grep "11937923"
 
