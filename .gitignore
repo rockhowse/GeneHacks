@@ -103,3 +103,4 @@ cmd_line/variant_calling_pipeline/data/
 *.swp
 cmd_line/rna_seq/gencommand_proj4
 cmd_line/rna_seq/gencommand_proj4.*
+cmd_line/rna_seq/data/
