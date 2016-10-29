@@ -49,29 +49,52 @@ cp ./data/athal_genes.gtf ./data/annotation/athal_genes.gtf
 # not used: ANNOT_IDX=
 # not used: BWT2_IDX=$DATA_DIR/atal_index
 
-# run tophat using supplied gene annotations and pre-generated bowtie2 index from above
-tophat2 -o ./data/tophat/athal \               	# output directory
-	-p 10 \                                	# 10 threads
-	-G ./data/annotation/athal_genes.gtf \ 	# gene annotations
-	./data/athal_index/athal \		# bowtie2 index
-	./data/Day8.fastq ./data/Day16.fastq	# data to seq
+# run tophat2 using supplied gene annotations and pre-generated bowtie2 index from above on Day8
+tophat2 -o ./data/tophat/athal/Day8 \
+	-p 10 \
+	-G ./data/annotation/athal_genes.gtf \
+	./data/athal_index/athal \
+	./data/Day8.fastq
 
 # SUCCESS!
-# [2016-10-29 18:05:34] Run complete: 00:00:21 elapsed
-# directory structure after tophat completes
-# [guest@centos6 rna_seq]$ ls -al ./data/tophat/athal/
-# total 5493
-# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:05 .
-# drwxrwx---. 1 root vboxsf       0 Oct 29 18:03 ..
-# -rwxrwx---. 1 root vboxsf 5457908 Oct 29 18:05 accepted_hits.bam
-# -rwxrwx---. 1 root vboxsf     732 Oct 29 18:05 align_summary.txt
-# -rwxrwx---. 1 root vboxsf    2820 Oct 29 18:05 deletions.bed
-# -rwxrwx---. 1 root vboxsf    2081 Oct 29 18:05 insertions.bed
-# -rwxrwx---. 1 root vboxsf   22770 Oct 29 18:05 junctions.bed
-# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:05 logs
-# -rwxrwx---. 1 root vboxsf     270 Oct 29 18:05 prep_reads.info
-# -rwxrwx---. 1 root vboxsf    5124 Oct 29 18:05 unmapped.bam
+# [2016-10-29 18:42:24] Run complete: 00:00:11 elapsed
 
+# directory structure after tophat2 completes
+# guest@centos6 rna_seq]$ ls -al ./data/tophat/athal/Day8
+# total 2399
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:42 .
+# drwxrwx---. 1 root vboxsf       0 Oct 29 18:40 ..
+# -rwxrwx---. 1 root vboxsf 2301786 Oct 29 18:42 accepted_hits.bam
+# -rwxrwx---. 1 root vboxsf     199 Oct 29 18:42 align_summary.txt
+# -rwxrwx---. 1 root vboxsf    1260 Oct 29 18:42 deletions.bed
+# -rwxrwx---. 1 root vboxsf     583 Oct 29 18:42 insertions.bed
+# -rwxrwx---. 1 root vboxsf   15148 Oct 29 18:42 junctions.bed
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:42 logs
+# -rwxrwx---. 1 root vboxsf      64 Oct 29 18:42 prep_reads.info
+# -rwxrwx---. 1 root vboxsf    3839 Oct 29 18:42 unmapped.bam
 
+# run tophat2 using supplied gene annotations and pre-generated bowtie2 index from above on Day16
+tophat2 -o ./data/tophat/athal/Day16 \
+	-p 10 \
+	-G ./data/annotation/athal_genes.gtf \
+        ./data/athal_index/athal \
+        ./data/Day16.fastq
+
+# SUCCESS!
+# [2016-10-29 18:58:27] Run complete: 00:00:11 elapsed
+
+# directory structure after tophat2 completes
+# [guest@centos6 rna_seq]$ ls -al ./data/tophat/athal/Day16
+# total 2207
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:58 .
+# drwxrwx---. 1 root vboxsf       0 Oct 29 18:58 ..
+# -rwxrwx---. 1 root vboxsf 2099352 Oct 29 18:58 accepted_hits.bam
+# -rwxrwx---. 1 root vboxsf     199 Oct 29 18:58 align_summary.txt
+# -rwxrwx---. 1 root vboxsf    1728 Oct 29 18:58 deletions.bed
+# -rwxrwx---. 1 root vboxsf    1749 Oct 29 18:58 insertions.bed
+# -rwxrwx---. 1 root vboxsf   21601 Oct 29 18:58 junctions.bed
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:58 logs
+# -rwxrwx---. 1 root vboxsf      64 Oct 29 18:58 prep_reads.info
+# -rwxrwx---. 1 root vboxsf    1996 Oct 29 18:58 unmapped.bam
 
 
