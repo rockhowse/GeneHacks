@@ -58,6 +58,19 @@ tophat2 -o ./data/tophat/athal \               	# output directory
 
 # SUCCESS!
 # [2016-10-29 18:05:34] Run complete: 00:00:21 elapsed
+# directory structure after tophat completes
+# [guest@centos6 rna_seq]$ ls -al ./data/tophat/athal/
+# total 5493
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:05 .
+# drwxrwx---. 1 root vboxsf       0 Oct 29 18:03 ..
+# -rwxrwx---. 1 root vboxsf 5457908 Oct 29 18:05 accepted_hits.bam
+# -rwxrwx---. 1 root vboxsf     732 Oct 29 18:05 align_summary.txt
+# -rwxrwx---. 1 root vboxsf    2820 Oct 29 18:05 deletions.bed
+# -rwxrwx---. 1 root vboxsf    2081 Oct 29 18:05 insertions.bed
+# -rwxrwx---. 1 root vboxsf   22770 Oct 29 18:05 junctions.bed
+# drwxrwx---. 1 root vboxsf   65536 Oct 29 18:05 logs
+# -rwxrwx---. 1 root vboxsf     270 Oct 29 18:05 prep_reads.info
+# -rwxrwx---. 1 root vboxsf    5124 Oct 29 18:05 unmapped.bam
 
 
 
