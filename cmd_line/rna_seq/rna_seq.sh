@@ -42,11 +42,12 @@ cp ./data/athal_chr.fa ./data/athal_index/athal.fa
 # copy the annotations to the annotation directory
 cp ./data/athal_genes.gtf ./data/annotation/athal_genes.gtf
 
-DATA_DIR=./data/
-WORK_DIR=$DATA_DIR/tophat
-ANNOT=$DATA_DIR/annotation/athal_genes.gtf
-# not needed? ANNOT_IDX=
-BWT2_IDX=$DATA_DIR/atal_index
+# not using these as the dirs are short enough for clean cmd line
+# not used: DATA_DIR=./data/
+# not used: WORK_DIR=$DATA_DIR/tophat
+# not used: ANNOT=$DATA_DIR/annotation/athal_genes.gtf
+# not used: ANNOT_IDX=
+# not used: BWT2_IDX=$DATA_DIR/atal_index
 
 # run tophat using supplied gene annotations and pre-generated bowtie2 index from above
 tophat2 -o ./data/tophat/athal \               	# output directory
