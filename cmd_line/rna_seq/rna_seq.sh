@@ -18,6 +18,7 @@ mkdir -p ./data/
 mkdir -p ./data/tophat/
 mkdir -p ./data/annotation/
 mkdir -p ./data/cufflinks/
+mkdir -p ./data/cuffcompare/
 
 # create directory for athal index
 # uncommented out as no need to create athal dir
@@ -166,4 +167,50 @@ cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep exon | cut -d ' ' -f
 # get the number of multi-exon transcripts find exon records, group by field 4 and get count of only duplicate values (uniq -cd)
 cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cd | wc -l
 cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cd | wc -l
+
+# make directories for cuffcompare as it doesn't appear to make the output directory structure when used with -o
+mkdir -p ./data/cuffcompare/athal/Day8
+mkdir -p ./data/cuffcompare/athal/Day16
+
+# run cuffcompare using the reference gene annotation and use -R to only consider the reference transcripts that overlap input transfrags
+cuffcompare -r ./data/athal_genes.gtf -R -o ./data/cuffcompare/athal/Day8/athal ./data/cufflinks/athal/Day8/transcripts.gtf
+cuffcompare -r ./data/athal_genes.gtf -R -o ./data/cuffcompare/athal/Day16/athal ./data/cufflinks/athal/Day16/transcripts.gtf
+
+# directory structure
+# [guest@centos6 rna_seq]$ ls -al ./data/cuffcompare/athal/Day8/
+# total 117
+# drwxrwx---. 1 root vboxsf     0 Oct 30 13:56 .
+# drwxrwx---. 1 root vboxsf     0 Oct 30 13:59 ..
+# -rwxrwx---. 1 root vboxsf 86277 Oct 30 14:00 athal.combined.gtf
+# -rwxrwx---. 1 root vboxsf  6266 Oct 30 14:00 athal.loci
+# -rwxrwx---. 1 root vboxsf  1211 Oct 30 14:00 athal.stats
+# -rwxrwx---. 1 root vboxsf 24464 Oct 30 14:00 athal.tracking
+# [guest@centos6 rna_seq]$ ls -al ./data/cuffcompare/athal/Day16/
+# total 106
+# drwxrwx---. 1 root vboxsf     0 Oct 30 14:00 .
+# drwxrwx---. 1 root vboxsf     0 Oct 30 13:59 ..
+# -rwxrwx---. 1 root vboxsf 89155 Oct 30 14:00 athal.combined.gtf
+# -rwxrwx---. 1 root vboxsf  4782 Oct 30 14:00 athal.loci
+# -rwxrwx---. 1 root vboxsf  1214 Oct 30 14:00 athal.stats
+# -rwxrwx---. 1 root vboxsf 11391 Oct 30 14:00 athal.tracking
+
+# get the number of transcripts that fully the reference transcripts (class_code ~ '=')
+cut -f3 ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | sort | uniq -c | grep =
+cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c | grep =
+
+# get the number of splice variants for a specific gene
+cat ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | grep AT4G20240 | wc -l
+cat ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | grep AT4G20240 | wc -l
+
+# get the number of transcripts that are partial reconstructions of the reference transcrips (class_code ~ 'c')
+cut -f3 ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'c$'
+cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'c$'
+
+# get the number of transcripts that are potentially novel splice variants (class_code ~ 'j')
+cut -f3 ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'j$'
+cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'j$'
+
+# get the number of transcripts that fall entirely within a reference intron (class_code ~ 'i')
+cut -f3 ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'i$'
+cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'i$'
 
