@@ -1,6 +1,9 @@
 #!/bin/bash
 # This script contains commands to do a simple RNA-seq experiment to determine genes that are differentially expressed
 #
+# Interesting addtional information on RNA-seq techniques used here:
+# https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2672628/
+#
 # required tools used:
 # - samtools    v1.2
 # - bowtie2     v2.2.2
@@ -50,11 +53,11 @@ cp ./data/athal_genes.gtf ./data/annotation/athal_genes.gtf
 # not used: BWT2_IDX=$DATA_DIR/atal_index
 
 # run tophat2 using supplied gene annotations and pre-generated bowtie2 index from above on Day8
-tophat2 -o ./data/tophat/athal/Day8 \
-	-p 10 \
-	-G ./data/annotation/athal_genes.gtf \
-	./data/athal_index/athal \
-	./data/Day8.fastq
+#tophat2 -o ./data/tophat/athal/Day8 \
+#	-p 10 \
+#	-G ./data/annotation/athal_genes.gtf \
+#	./data/athal_index/athal \i
+#	./data/Day8.fastq
 
 # SUCCESS!
 # [2016-10-29 18:42:24] Run complete: 00:00:11 elapsed
@@ -73,12 +76,12 @@ tophat2 -o ./data/tophat/athal/Day8 \
 # -rwxrwx---. 1 root vboxsf      64 Oct 29 18:42 prep_reads.info
 # -rwxrwx---. 1 root vboxsf    3839 Oct 29 18:42 unmapped.bam
 
-# run tophat2 using supplied gene annotations and pre-generated bowtie2 index from above on Day16
-tophat2 -o ./data/tophat/athal/Day16 \
-	-p 10 \
-	-G ./data/annotation/athal_genes.gtf \
-        ./data/athal_index/athal \
-        ./data/Day16.fastq
+# run tophat2 using supplied gene annotations and pre-generated bowtie2 index from above on Day1
+#tophat2 -o ./data/tophat/athal/Day16 \
+#	-p 10 \
+#	-G ./data/annotation/athal_genes.gtf \
+#        ./data/athal_index/athal \
+#        ./data/Day16.fastq
 
 # SUCCESS!
 # [2016-10-29 18:58:27] Run complete: 00:00:11 elapsed
@@ -97,4 +100,23 @@ tophat2 -o ./data/tophat/athal/Day16 \
 # -rwxrwx---. 1 root vboxsf      64 Oct 29 18:58 prep_reads.info
 # -rwxrwx---. 1 root vboxsf    1996 Oct 29 18:58 unmapped.bam
 
+# evidently using the gtf annotations at this juncture is WRONG as -G is NOT a default non-required parameter
+tophat2 -o ./data/tophat/athal/Day8 ./data/athal_index/athal ./data/Day8.fastq
+tophat2 -o ./data/tophat/athal/Day16 ./data/athal_index/athal ./data/Day16.fastq
+
+# get number of reads/mapped/mutiple alignments
+cat ./data/tophat/athal/Day8/align_summary.txt
+cat ./data/tophat/athal/Day16/align_summary.txt
+
+# get the number of spliced alignments, grep for 'N' in the CIGAR string
+# https://www.biostars.org/p/165061/
+samtools view  ./data/tophat/athal/Day8/accepted_hits.bam | awk '($6 ~ /N/)' | wc -l
+samtools view  ./data/tophat/athal/Day16/accepted_hits.bam | awk '($6 ~ /N/)' | wc -l
+
+# count the number of splice junctions
+# this wasn't covered in either tophat video (?) 
+# found demo here:
+# https://wikis.utexas.edu/display/bioiteam/Mapping+with+Tophat+Exercises
+samtools view ./data/tophat/athal/Day8/accepted_hits.bam | cut -f 1,6 | grep 'N'|head | wc -l
+samtools view ./data/tophat/athal/Day16/accepted_hits.bam | cut -f 1,6 | grep 'N'|head | wc -l
 
