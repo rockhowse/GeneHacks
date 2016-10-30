@@ -147,4 +147,23 @@ cufflinks -o ./data/cufflinks/athal/Day16 ./data/tophat/athal/Day16/accepted_hit
 # -rwxrwx---. 1 root vboxsf      0 Oct 30 10:10 skipped.gtf
 # -rwxrwx---. 1 root vboxsf 107303 Oct 30 10:10 transcripts.gtf
 
+# get the number of genes, use field 9, split by space, and then field 2
+cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | cut -d ' ' -f2 | sort -u | wc -l
+cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | cut -d ' ' -f2 | sort -u | wc -l
+
+# get the number of transcripts, use field 9, split by space, and then field 4
+cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | cut -d ' ' -f4 | sort -u | wc -l
+cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | cut -d ' ' -f4 | sort -u | wc -l
+
+# get the number of single transcript genes, group by field 2 and get count of only unique values
+cut -f3,9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep '^transcript' | cut -f2 | cut -d ' ' -f4 | uniq -cu | wc -l
+cut -f3,9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep '^transcript' | cut -f2 | cut -d ' ' -f4 | uniq -cu | wc -l
+
+# get the number of single-exon transcripts find exon records, group by field 4 and get count of only unique values (uniq -cu)
+cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cu | wc -l
+cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cu | wc -l
+
+# get the number of multi-exon transcripts find exon records, group by field 4 and get count of only duplicate values (uniq -cd)
+cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cd | wc -l
+cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cd | wc -l
 
