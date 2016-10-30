@@ -104,6 +104,10 @@ cp ./data/athal_genes.gtf ./data/annotation/athal_genes.gtf
 tophat2 -o ./data/tophat/athal/Day8 ./data/athal_index/athal ./data/Day8.fastq
 tophat2 -o ./data/tophat/athal/Day16 ./data/athal_index/athal ./data/Day16.fastq
 
+# as our data includes non-mapped alignments, let's exclude these when getting the number of alignments (NOT READS!)
+samtools view ./data/tophat/athal/Day8/accepted_hits.bam | cut -f3 | grep -v '*' | wc -l
+samtools view ./data/tophat/athal/Day16/accepted_hits.bam | cut -f3 | grep -v '*' | wc -l
+
 # get number of reads/mapped/mutiple alignments
 cat ./data/tophat/athal/Day8/align_summary.txt
 cat ./data/tophat/athal/Day16/align_summary.txt
