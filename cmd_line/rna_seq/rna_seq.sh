@@ -17,6 +17,7 @@
 mkdir -p ./data/
 mkdir -p ./data/tophat/
 mkdir -p ./data/annotation/
+mkdir -p ./data/cufflinks/
 
 # create directory for athal index
 # uncommented out as no need to create athal dir
@@ -123,4 +124,27 @@ samtools view  ./data/tophat/athal/Day16/accepted_hits.bam | awk '($6 ~ /N/)' | 
 # https://wikis.utexas.edu/display/bioiteam/Mapping+with+Tophat+Exercises
 samtools view ./data/tophat/athal/Day8/accepted_hits.bam | cut -f 1,6 | grep 'N'|head | wc -l
 samtools view ./data/tophat/athal/Day16/accepted_hits.bam | cut -f 1,6 | grep 'N'|head | wc -l
+
+# assemble the aligned RNA-seq reads into genes and transcripts using cufflinks
+cufflinks -o ./data/cufflinks/athal/Day8 ./data/tophat/athal/Day8/accepted_hits.bam
+cufflinks -o ./data/cufflinks/athal/Day16 ./data/tophat/athal/Day16/accepted_hits.bam
+
+# output dirs
+# [guest@centos6 rna_seq]$ ls -al ./data/cufflinks/athal/Day8/
+# total 152
+# drwxrwx---. 1 root vboxsf      0 Oct 30 10:08 .
+# drwxrwx---. 1 root vboxsf      0 Oct 30 10:08 ..
+# -rwxrwx---. 1 root vboxsf  13437 Oct 30 10:08 genes.fpkm_tracking
+# -rwxrwx---. 1 root vboxsf  15768 Oct 30 10:08 isoforms.fpkm_tracking
+# -rwxrwx---. 1 root vboxsf      0 Oct 30 10:08 skipped.gtf
+# -rwxrwx---. 1 root vboxsf 124933 Oct 30 10:08 transcripts.gtf
+# [guest@centos6 rna_seq]$ ls -al ./data/cufflinks/athal/Day16/
+# total 119
+# drwxrwx---. 1 root vboxsf      0 Oct 30 10:10 .
+# drwxrwx---. 1 root vboxsf      0 Oct 30 10:10 ..
+# -rwxrwx---. 1 root vboxsf   5684 Oct 30 10:10 genes.fpkm_tracking
+# -rwxrwx---. 1 root vboxsf   7509 Oct 30 10:10 isoforms.fpkm_tracking
+# -rwxrwx---. 1 root vboxsf      0 Oct 30 10:10 skipped.gtf
+# -rwxrwx---. 1 root vboxsf 107303 Oct 30 10:10 transcripts.gtf
+
 
