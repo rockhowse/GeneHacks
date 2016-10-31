@@ -159,8 +159,7 @@ cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | cut -d ' ' -f4 | sort -u |
 cut -f9 ./data/cufflinks/athal/Day16/transcripts.gtf | cut -d ' ' -f4 | sort -u | wc -l
 
 # get the number of single transcript genes, group by field 2 and get count of only unique values
-cut -f3,9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep '^transcript' | cut -f2 | cut -d ' ' -f4 | uniq -cu | wc -l
-cut -f3,9 ./data/cufflinks/athal/Day16/transcripts.gtf | grep '^transcript' | cut -f2 | cut -d ' ' -f4 | uniq -cu | wc -l
+cut -f3,9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep '^transcript' | cut -f2 | cut -d ' ' -f2 | sort | uniq -cu | wc -l
 
 # get the number of single-exon transcripts find exon records, group by field 4 and get count of only unique values (uniq -cu)
 cut -f9 ./data/cufflinks/athal/Day8/transcripts.gtf | grep exon | cut -d ' ' -f4 | uniq -cu | wc -l
@@ -270,8 +269,8 @@ cuffdiff -o ./data/cuffdiff/athal/ ./data/cuffmerge/athal/merged.gtf \
 # -rw-rw-r--. 1 guest guest 11318 Oct 30 20:52 tss_groups.read_group_tracking
 # -rw-rw-r--. 1 guest guest 11117 Oct 30 20:52 var_model.info
 
-# get the number of genes in the gene_exp.diff, field one has geneID, group on that and count
-cut -f1 ./data/cuffdiff/athal/gene_exp.diff | sort | uniq -c | wc -l
+# get the number of genes in the gene_exp.diff, field one has geneID, group on that and count, have to skip "test_id"
+cut -f1 ./data/cuffdiff/athal/gene_exp.diff | grep -v "test_id" | sort | uniq -c | wc -l
 
 # get the number of genes that sere detected as differentially expressed, filter on "yes" and do same grouping on gene id
 cat ./data/cuffdiff/athal/gene_exp.diff | grep yes | cut -f1 | sort | uniq -c | wc -l
