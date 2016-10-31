@@ -20,6 +20,7 @@ mkdir -p ./data/annotation/
 mkdir -p ./data/cufflinks/
 mkdir -p ./data/cuffcompare/
 mkdir -p ./data/cuffmerge/
+mkdir -p ./data/cuffdiff/
 
 # create directory for athal index
 # uncommented out as no need to create athal dir
@@ -236,6 +237,44 @@ cut -f9 ./data/cuffmerge/athal/merged.gtf | cut -d ' ' -f2 | sort -u | wc -l
 cut -f9 ./data/cuffmerge/athal/merged.gtf | cut -d ' ' -f4 | sort -u | wc -l
 
 # use cuffdiff to perform the differential expression analysis
+cuffdiff -o ./data/cuffdiff/athal/ ./data/cuffmerge/athal/merged.gtf \
+	./data/tophat/athal/Day8/accepted_hits.bam \
+	./data/tophat/athal/Day16/accepted_hits.bam \
 
+# directory structure
+# [guest@centos6 rna_seq]$ ls -al ./data/cuffdiff/athal/
+# total 356
+# drwxrwxr-x. 2 guest guest  4096 Oct 30 20:50 .
+# drwxrwxr-x. 3 guest guest  4096 Oct 30 20:50 ..
+# -rw-rw-r--. 1 guest guest    53 Oct 30 20:52 bias_params.info
+# -rw-rw-r--. 1 guest guest    12 Oct 30 20:52 cds.count_tracking
+# -rw-rw-r--. 1 guest guest   115 Oct 30 20:52 cds.diff
+# -rw-rw-r--. 1 guest guest   124 Oct 30 20:52 cds_exp.diff
+# -rw-rw-r--. 1 guest guest    91 Oct 30 20:52 cds.fpkm_tracking
+# -rw-rw-r--. 1 guest guest   115 Oct 30 20:52 cds.read_group_tracking
+# -rw-rw-r--. 1 guest guest 12525 Oct 30 20:52 gene_exp.diff
+# -rw-rw-r--. 1 guest guest  7069 Oct 30 20:52 genes.count_tracking
+# -rw-rw-r--. 1 guest guest 12930 Oct 30 20:52 genes.fpkm_tracking
+# -rw-rw-r--. 1 guest guest 10782 Oct 30 20:52 genes.read_group_tracking
+# -rw-rw-r--. 1 guest guest 20154 Oct 30 20:52 isoform_exp.diff
+# -rw-rw-r--. 1 guest guest 11402 Oct 30 20:52 isoforms.count_tracking
+# -rw-rw-r--. 1 guest guest 23071 Oct 30 20:52 isoforms.fpkm_tracking
+# -rw-rw-r--. 1 guest guest 18633 Oct 30 20:52 isoforms.read_group_tracking
+# -rw-rw-r--. 1 guest guest 10336 Oct 30 20:52 promoters.diff
+# -rw-rw-r--. 1 guest guest   228 Oct 30 20:52 read_groups.info
+# -rw-rw-r--. 1 guest guest   237 Oct 30 20:52 run.info
+# -rw-rw-r--. 1 guest guest 11397 Oct 30 20:52 splicing.diff
+# -rw-rw-r--. 1 guest guest 14106 Oct 30 20:52 tss_group_exp.diff
+# -rw-rw-r--. 1 guest guest  7529 Oct 30 20:52 tss_groups.count_tracking
+# -rw-rw-r--. 1 guest guest 14246 Oct 30 20:52 tss_groups.fpkm_tracking
+# -rw-rw-r--. 1 guest guest 11318 Oct 30 20:52 tss_groups.read_group_tracking
+# -rw-rw-r--. 1 guest guest 11117 Oct 30 20:52 var_model.info
 
+# get the number of genes in the gene_exp.diff, field one has geneID, group on that and count
+cut -f1 ./data/cuffdiff/athal/gene_exp.diff | sort | uniq -c | wc -l
 
+# get the number of genes that sere detected as differentially expressed, filter on "yes" and do same grouping on gene id
+cat ./data/cuffdiff/athal/gene_exp.diff | grep yes | cut -f1 | sort | uniq -c | wc -l
+
+# get the number of transcripts (isoform_exp.diff) that were differentially expressed, filter on "yes"
+cat ./data/cuffdiff/athal/isoform_exp.diff | grep yes | wc -l
