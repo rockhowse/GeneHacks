@@ -9,16 +9,17 @@
 # - bowtie2     v2.2.2
 # - tophat      v2.0.14
 # - cufflinks   v2.2.1
-# - cuffmerege  v2.2.1
+# - cuffmerge  v2.2.1
 # - cuffcompare v2.2.1
 # - cuffdiff    v2.2.1
 
-# make directories needed for this 
+# make directories needed for this process
 mkdir -p ./data/
 mkdir -p ./data/tophat/
 mkdir -p ./data/annotation/
 mkdir -p ./data/cufflinks/
 mkdir -p ./data/cuffcompare/
+mkdir -p ./data/cuffmerge/
 
 # create directory for athal index
 # uncommented out as no need to create athal dir
@@ -213,4 +214,28 @@ cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c
 # get the number of transcripts that fall entirely within a reference intron (class_code ~ 'i')
 cut -f3 ./data/cufflinks/athal/Day8/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'i$'
 cut -f3 ./data/cufflinks/athal/Day16/athal.transcripts.gtf.tmap | sort | uniq -c | grep 'i$'
+
+# create the list of gtf files to compare
+mkdir -p ./data/cuffmerge/athal/
+rm ./data/cuffmerge/athal/transcript_gtf_list.txt
+echo "./data/cufflinks/athal/Day8/transcripts.gtf" >> ./data/cuffmerge/athal/transcript_gtf_list.txt
+echo "./data/cufflinks/athal/Day16/transcripts.gtf" >> ./data/cuffmerge/athal/transcript_gtf_list.txt
+
+# file should now include the following
+# [guest@centos6 rna_seq]$ cat ./data/cuffmerge/athal/transcript_gtf_list.txt 
+# ./data/cufflinks/athal/Day8/transcripts.gtf
+# ./data/cufflinks/athal/Day16/transcripts.gtf
+
+# use cuffmerge and provided annotation to merge and reconcile the two ests of cufflinks transcripts (Day8 and Day16)
+cuffmerge -o ./data/cuffmerge/athal/ -g ./data/athal_genes.gtf ./data/cuffmerge/athal/transcript_gtf_list.txt
+
+# get the number of genes (loci) in the merged.gtf
+cut -f9 ./data/cuffmerge/athal/merged.gtf | cut -d ' ' -f2 | sort -u | wc -l
+
+# get the number of transcripts in the merged.gtf
+cut -f9 ./data/cuffmerge/athal/merged.gtf | cut -d ' ' -f4 | sort -u | wc -l
+
+# use cuffdiff to perform the differential expression analysis
+
+
 
